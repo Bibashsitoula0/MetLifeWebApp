@@ -1,0 +1,64 @@
+﻿@page
+@model RegisterModel
+
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <h1>Create Account</h1>
+                    <div>
+                        <input type="text" asp-for="Input.Email" class="form-control" placeholder="Email" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-control">
+                            <option disabled selected>Select Role</option>
+                        </select>
+                        <span asp-validation-for="Input.Role" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-success" style="margin-top:5px;">Submit</button>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+
+                        <br />
+                        <div>
+                            <img src="/Content/build/images/MetLife.png" style="height:30px;width:100px;object-fit: contain;" />
+
+                            <p>Copyright © 2021 American Life Insurance Company</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+            <section class="login_content">
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

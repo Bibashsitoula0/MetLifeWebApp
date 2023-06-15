@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewData["Title"] = "TeleDoctor";
+}
+
+@{
+
+    string[] pending = ViewBag.PendingStatus;
+    string[] bookingstatus = ViewBag.BookingStatus;
+
+    int pageNumber = ViewBag.pageNumber;
+    int pagesize = 10;
+    string fromdate = ViewBag.formDate;
+    string todate = ViewBag.toDate;
+    string booking_status = ViewBag.booking_status;
+    string pending_status = ViewBag.pending_status;
+    string Code = ViewBag.code;
+    string Name = ViewBag.name;
+    string Contact = ViewBag.contact;
+}
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="page-title">
+    <div class="row">
+        <div class="x_panel">
+            <div class="col-md-12 ">
+                <div class="x_content">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-1 col-sm-1 ">Code :</label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <input type="text" id="Code" required="required" name="Code"
+                                   class="form-control ">
+                        </div>
+
+                        <label class="col-form-label col-md-1 col-sm-1 ">Name :</label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <input type="text" id="Name" required="required" name="Name"
+                                   class="form-control ">
+                        </div>
+                        <label class="col-form-label col-md-1 col-sm-1 ">Contact :</label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <input type="text" id="Contact" required="required" name="Contact"
+                                   class="form-control ">
+                        </div>
+
+
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">Booking Status :</label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <select class="select2_group form-control " id="booking_status" name="booking_status" style="margin-top:10px;">
+
+                                <option value="">Select All</option>
+                                @foreach (var booking in bookingstatus)
+                                {
+                                    <option value="@booking">@booking</option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <label class="col-form-label col-md-1 col-sm-1  " style="margin-top:10px;">Pending Status :</label>
+
+                        <div class="col-md-3 col-sm-3 ">
+                            <select class="select2_group form-control required" id="pending_status" name="pending_status" style="margin-top:10px;">
+
+                                <option value="">Select All</option>
+                                @foreach (var pendingstatus in pending)
+                                {
+                                    <option value="@pendingstatus">@pendingstatus</option>
+                                }
+                            </select>
+                        </div>
+
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">From Date :</label>
+                        <div class="col-md-3 col-sm-3 " style="margin-top:10px;">
+                            <input id="Fromdate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                        </div>
+
+
+
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">To Date :</label>
+                        <div class="col-md-3 col-sm-3 " style="margin-top:10px;">
+                            <input id="Todate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                        </div>
+
+
+                        <div class="col-md-4 col-sm-4 col-sm-4" style="margin-top:10px;">
+                            <button id="filter" type="submit" class="btn btn-success">Search</button>
+                            <button id="reset" type="submit" class="btn btn-primary">Reset</button>
+                            <button id="export" type="submit" onclick="exportExcel()" class="btn btn-primary">Export</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="loadPartialView"></div>
+
+<script type="text/javascript">
+    debugger;
+
+    debugger;
+    $(document).ready(function () {
+
+       
+
+
+        getfilterlist();
+        var b = document.getElementById("Fromdate").value;
+        var a = $("#Fromdate").val();
+
+    });
+
+    
+
+    $('#filter').off("click").on("click", function () {
+        getfilterlist();
+    });
+
+    function getfilterlist() {
+        debugger;
+        $('#loadPartialView').load("/tele/doctor/data", JSON.parse(getSearchModel()),
+            function (response, status, xhr) {
+
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    ShowMessage("error", "error", msg + xhr.status + " " + xhr.statusText);
+                };
+            });
+    }
+
+    function getSearchModel() {
+        var Filterdata = {
+            formDate: $("#Fromdate").val() || "@fromdate",
+            toDate: $('#Todate').val() || "@todate",
+            code: $('#Code').val() || "@Code",
+            booking_status: $('#booking_status').val() || "@booking_status",
+            pending_status: $('#pending_status').val() || "@pending_status",
+            name: $('#Name').val() || "@Name",
+            contact: $('#Contact').val() || "@Contact",
+            page: @pageNumber,
+            pageSize: @pagesize
+            };
+        var model = JSON.stringify(Filterdata);
+        debugger
+        return model;
+
+    }
+
+    $('#reset').off("click").on("click", function () {
+        getfilterreset();
+    });
+
+
+    function getfilterreset() {
+       window.location.href = `/tele/doctor/list`;
+    }
+
+    function getSearchModelReset() {
+        var Filterdata = {
+            formDate: $("#Fromdate").val(''),
+            toDate: $('#Todate').val(''),
+            code: $('#Code').val(''),
+            booking_status: $('#booking_status').val(''),
+            pending_status: $('#pending_status').val(''),
+            name: $('#Name').val(''),
+            contact: $('#Contact').val(''),
+            page: 1,
+            pageSize: 10
+        };
+        var model = JSON.stringify(Filterdata);
+        debugger
+        return model;
+         }
+
+    function exportExcel() {
+        debugger;
+        var formDate = $("#Fromdate").val();
+        var toDate = $('#Todate').val();
+        var code = $('#Code').val();
+        var booking_status = $('#booking_status').val();
+        var pending_status = $('#pending_status').val();
+        var name = $('#Name').val();
+        var contact = $('#Contact').val();
+
+        window.location.href = `/tele/doctor/export?fromdate=${formDate}&todate=${toDate}&code=${code}&bookingstatus=${booking_status}&pendingstatus=${pending_status}&name=${name}&contact=${contact}`;
+        getSearchModelReset();
+    }
+
+</script>
+

@@ -1,0 +1,89 @@
+﻿<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@{
+    ViewData["Title"] = "TeleDoctorDashboard";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3></h3>
+    </div>
+
+    <div class="x_panel">
+        <div class="x_content">
+            <br>
+
+            <div>
+                <label class="col-form-label col-md-1 col-sm-1 ">From Date :</label>
+                <div class="col-md-3 col-sm-3 ">
+                    <input id="Fromdate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                </div>
+            </div>
+
+            <div>
+                <label class="col-form-label col-md-1 col-sm-1 ">To Date :</label>
+                <div class="col-md-3 col-sm-3 ">
+                    <input id="Todate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-1 col-sm-1 col-sm-1 ">
+
+                    <button id="filter" type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<div id="loadPartialView"></div>
+
+
+<script type="text/javascript">
+
+    debugger;
+    $(document).ready(function () {
+        getdashboardlist();
+        var b = document.getElementById("Fromdate").value;
+        var a = $("#Fromdate").val();
+
+    });
+
+    $('#filter').off("click").on("click", function () {
+        getdashboardlist();
+    });
+
+    function getdashboardlist() {
+        debugger;
+        $('#loadPartialView').load("/teledoctor/wise/dashboard", JSON.parse(getSearchModel()),
+            function (response, status, xhr) {
+
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                   
+                };
+
+            });
+    }
+
+
+    function getSearchModel() {
+        var Filterdata = {
+            formDate: $("#Fromdate").val(),
+            toDate: $('#Todate').val()
+
+        };
+        var model = JSON.stringify(Filterdata);
+        debugger
+        return model;
+    }
+
+    function downloadAts() {
+        window.location.href = "/ats/detail/export";
+    }
+</script>
+
+
+

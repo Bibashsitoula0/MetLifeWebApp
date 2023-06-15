@@ -1,0 +1,257 @@
+﻿@model List<MetLifeInsurance.Models.RegisterUser>
+
+ <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+@{
+
+    string[] role = ViewBag.GeneralUserRoles;
+}
+
+
+<div class="page-title">
+</div>
+<div class="row" style="height:1000px" >
+
+
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Users</h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+                    <a href="/CreateUser" type="submit" class="btn btn-success">Create</a>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>S.n</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Is_Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int serialNo = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <label> @serialNo</label>
+                                    @{
+                                        serialNo++;
+                                    }
+                                </td>
+                                <td>@item.UserName</td>
+                                <td>@item.Email</td>
+                                <td>@item.Role</td>
+                                <td>
+                                    <input type="checkbox" onclick="activeInActiveUser('@item.Id')" name="IsDiscontinue" @(item.is_active == true ? "checked" : "")>
+                                </td>
+                                <td>
+                                    <div style="display:block;">
+                                       
+                                        <div id='edit' style="display: inline-block;">
+                                            <a class="btn" style="color:dodgerblue" data-toggle="modal" data-target="#myModals" title="Edit" onclick="popupEdit('@item.Id','@item.UserName','@item.Email','@item.Role')">
+                                                <span class="fa fa-edit"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" style="width: 500px;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Edit User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="demo-form2" method="POST" action="/EditUser" data-parsley-validate class="form-horizontal form-label-left">
+
+                                <input type="hidden" id="UserId" name="UserId" value="eb5e6ae2-b7fc-4317-bbde-c880785260e3" />
+
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                        User Name <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input type="text" id="UserName" name="UserName" class="form-control required ">
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                        Email
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input type="email" id="Email" name="Email" class="form-control  ">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align">Select<span class="required">*</span></label>
+
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <select class="select2_group form-control required" id="Role" name="Role">
+                                            <option value="">Select Role</option>
+                                            @foreach (var roles in role)
+                                            {
+                                                <option value="@roles">@roles</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group text-right">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" style="width: 500px;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="demo-form2" method="POST" action="/ChangePassword" data-parsley-validate class="form-horizontal form-label-left">
+
+                                <input type="hidden" id="Emails" name="Emails" />
+
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-4 col-sm-4 label-align" for="last-name">Password <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input type="password" id="Password" name="Password" required="required" class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="item form-group">
+                                    <label for="middle-name" class="col-form-label col-md-4 col-sm-4 label-align">Confirm Password <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input id="ConfirmPassword" class="form-control" type="password" name="ConfirmPassword" required="required" data-parsley-equalto="#Password">
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group text-right">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+
+
+
+@*<script>
+
+    $("#myModal").hide();
+    $("#myModals").hide();
+
+
+    function popup(email) {
+        $("#myModals").hide();
+        $("#myModal").show();
+        $("#Emails").val(email);
+
+
+    }
+    function popupEdit(Id, email, role) {
+        $("#myModal").hide();
+        $("#myModals").show();
+        console.log(Id);
+        console.log(email);
+        console.log(role);
+
+
+
+        $("#UserId").val(Id);
+        $("#Role").val(role);
+        var e = $("#Email").val(email);
+        var b = e[0].value = email
+        console.log(e);
+        console.log(b);
+
+
+    }
+
+
+    function activeInActiveUser(event) {
+        debugger;
+        var checkbox = document.getElementsByName("IsDiscontinue")[0];
+        var isChecked = checkbox.checked;
+        let conf = confirm(`Are you sure to change user status ?`);
+        if (!conf) {
+            window.location.href = "/UserList";
+            return;
+        } else {
+
+            var xhr = new XMLHttpRequest();
+            var jsonData = {
+                Id: event,
+                Is_Active: isChecked
+
+            };
+            console.log("jsonData", jsonData);
+
+            var urlSearchParams = new URLSearchParams(jsonData);
+
+            xhr.open('POST', '/users/status/change', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    window.location.href = "/UserList";
+                }
+                else {
+                    WorkForce.loader.hide();
+                }
+            }
+            xhr.send(urlSearchParams);
+
+        }
+    }
+
+</script>*@

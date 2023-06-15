@@ -1,0 +1,128 @@
+﻿<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script> 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/Content/vendors/parsleyjs/dist/parsley.min.js"></script>
+
+@{
+    ViewData["Title"] = "UsersList";
+
+}
+
+<div class="page-title">
+    <div class="title_left">
+      
+    </div>
+
+</div>
+
+    <div id="loadPartialView"></div>
+    
+<script type="text/javascript">
+    debugger;
+    
+    $(document).ready(function () {
+        getdashboarduserlist();
+        $("#myModal").hide();
+        $("#myModals").hide();
+
+
+        showToast('User created sucessfully');
+        function showToast(message) {
+            var toast = document.getElementById('toast');
+            var toastMessage = document.getElementById('toast-message');
+            var toastClose = document.getElementById('toast-close');
+
+            toastMessage.textContent = message;
+
+            toast.classList.add('show');
+
+            toastClose.addEventListener('click', function () {
+                toast.classList.remove('show');
+            });
+
+            setTimeout(function () {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+       
+    });
+
+    function getdashboarduserlist() {
+        debugger;
+        $('#loadPartialView').load("/userlistall"),
+            function   (response, status, xhr) {
+
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                 
+                };
+
+            };
+    }
+
+    function popup(email) {
+        $("#myModals").hide();
+        $("#myModal").show();
+        $("#Emails").val(email);
+
+
+    }
+    function popupEdit(Id,username, email, role) {
+        $("#myModal").hide();
+        $("#myModals").show();
+        console.log(Id);
+        console.log(email);
+        console.log(role);
+
+        $("#UserId").val(Id);
+        $("#Role").val(role);
+        $("#UserName").val(username);
+        var e = $("#Email").val(email);
+        var b = e[0].value = email
+        console.log(e);
+        console.log(b);
+    }
+
+
+    function activeInActiveUser(event) {
+        debugger;
+        var checkbox = document.getElementsByName("IsDiscontinue")[0];
+        var isChecked = checkbox.checked;
+        let conf = confirm(`Are you sure to change user status ?`);
+        if (!conf) {
+            window.location.href = "/UsersList";
+            return;
+        } else {
+
+            var xhr = new XMLHttpRequest();
+            var jsonData = {
+                Id: event,
+                Is_Active: isChecked
+
+            };
+            console.log("jsonData", jsonData);
+
+            var urlSearchParams = new URLSearchParams(jsonData);
+
+            xhr.open('POST', '/users/status/change', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    window.location.href = "/UsersList";
+                }
+                else {
+                   
+                }
+            }
+            xhr.send(urlSearchParams);
+
+        }
+    }
+   
+                         
+   
+
+
+
+</script>
+

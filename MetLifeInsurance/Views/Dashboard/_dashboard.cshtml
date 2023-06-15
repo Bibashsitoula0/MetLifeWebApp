@@ -1,0 +1,187 @@
+﻿@model MetLifeInsurance.Models.DashBoardVm
+
+<script src="~/content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+
+<script src="~/content/build/js/custom.js"></script>
+<script src="~/content/vendors/Chart.js/dist/Chart.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.common.min.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.common.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.min.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.simple.min.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.simple.js"></script>
+<script src="~/content/vendors/echarts/dist/echarts.js"></script>
+<script src="~/content/vendors/echarts/map/js/world.js"></script>
+
+
+
+
+
+<div class="page-title" >
+</div>
+<div class="row" style="margin-top:100px;">
+
+ 
+     <div class="col-md-6 col-sm-6  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Booking Status</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="echart_pie_booking" style="height:350px;"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-sm-6 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Payment Status</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div id="echart_donut_payment_booking" style="height:350px;"></div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+
+
+</div>
+<div class="clearfix"></div>
+
+<div class="row" >
+
+    <div class="col-md-12 col-sm-12  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Top 5 Test Wise Reports
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div id="mainb" style="height:350px;"></div>
+
+            </div>
+        </div>
+    </div>
+   
+
+  </div>
+<div class="row">
+
+    <div class="col-md-6 col-sm-6  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Top 5 Medical Institute Wise Status
+
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="medicalpieChart" style="height:350px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    
+   
+    var bookind_status = @Html.Raw(Json.Serialize(Model.bookingstatus));
+    var paymentstatus = @Html.Raw(Json.Serialize(Model.paymentstatus));
+    var medicalstatuswise = @Html.Raw(Json.Serialize(Model.medicalstatus));
+    var testwise = @Html.Raw(Json.Serialize(Model.teststatus));
+    var dash = new DashBoardJS();  
+    dash.DrawPieChart(bookind_status);
+    dash.PaymentStatus(paymentstatus);
+    dash.MedicalStatus(medicalstatuswise);
+    dash.ReportTestWise(testwise);
+
+</script>
+

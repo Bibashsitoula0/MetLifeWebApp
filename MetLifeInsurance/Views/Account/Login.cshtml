@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+    string message = ViewBag.Message;
+    string usrmessage = ViewBag.UserMessage;
+ 
+    string userisactive = ViewBag.UserActiveMessage;
+} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+
+    <title>Met Life Insurance! | </title>
+
+    <!-- Bootstrap -->
+    @* <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">*@
+    <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="~/Content/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+</head>
+<style>
+    .toast {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        width: 300px;
+        background-color: red;
+        color: #000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    .toast-body {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .toast-message {
+        font-weight: bold;
+    }
+
+    #toast-close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+        color: white;
+    }
+
+    .x_title span {
+        /* color: #BDBDBD; */
+        color: white;
+    }
+</style>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div style="margin-left:right;">
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div id="toast" class="toast">
+                    <div class="toast-body">
+                        <span id="toast-message" style="color:white;"></span>
+                        <span id="toast-close">&times;</span>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.UserMessage))
+            {
+                <div id="toast" class="toast">
+                    <div class="toast-body">
+                        <span id="toast-message" style="color:white;"></span>
+                        <span id="toast-close">&times;</span>
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.UserActiveMessage))
+            {
+                <div id="toast" class="toast">
+                    <div class="toast-body">
+                        <span id="toast-message" style="color:white;"></span>
+                        <span id="toast-close">&times;</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form id="account" method="POST" action="/SubmitLogin" data-parsley-validate class="form-horizontal form-label-left">
+                        <h1>Login Form</h1>
+
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                      @*  <div>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="username">UserName<span class="required">*</span></label>
+                            <input type="text" id="UserName" name="UserName" required="required" class="form-control" placeholder="UserName">
+
+                        </div>
+
+                        <div>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
+                            <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" required="required">
+
+                        </div>*@
+                        <div>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="username">UserName<span class="required">*</span></label>
+                            <input type="text" id="UserName" name="UserName" class="form-control" placeholder="UserName">
+                            <div id="username-error" class="text-danger"></div>
+                        </div>
+
+                        <div>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
+                            <input type="password" id="Password" name="Password" class="form-control" placeholder="Password">
+                            <div id="password-error" class="text-danger"></div>
+                        </div>
+
+                    
+                     
+
+                        <div>
+                            <button type="submit" class="btn btn-success" onclick="validateForm(event)" style="margin-top:5px;">Log in</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+
+                            <div>
+                                <img src="/Content/build/images/MetLife.png" style="height:30px;width:100px;object-fit: contain;" />
+
+                                <p>Copyright © 2021 American Life Insurance Company</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+    function validateForm(event) {
+        // Prevent the form from submitting
+        event.preventDefault();
+        debugger;
+
+        // Clear previous error messages
+        document.getElementById('username-error').textContent = '';
+        document.getElementById('password-error').textContent = '';
+
+        // Get form inputs
+        var userName = document.getElementById('UserName').value;
+        var password = document.getElementById('Password').value;
+
+        // Validate inputs
+        var isValid = true;
+
+        if (userName.trim() === '') {
+            document.getElementById('username-error').textContent = 'Username is required.';
+            isValid = false;
+        }
+
+        if (password.trim() === '') {
+            document.getElementById('password-error').textContent = 'Password is required.';
+            isValid = false;
+        }
+
+        // If the form is valid, submit it
+        if (isValid) {
+            document.getElementById('account').submit();
+        }
+    }
+  
+
+    if ('@ViewBag.UserMessage' !== '') {
+        debugger;
+        showToast("User does not exist. Please contact administrative");
+        function showToast(message) {
+            var toast = document.getElementById('toast');
+            var toastMessage = document.getElementById('toast-message');
+            var toastClose = document.getElementById('toast-close');
+
+            toastMessage.textContent = message;
+
+            toast.classList.add('show');
+
+            toastClose.addEventListener('click', function () {
+                toast.classList.remove('show');
+            });
+
+            setTimeout(function () {
+                toast.classList.remove('show');
+            }, 3000); // Show toast for 3 seconds
+        }
+    }
+
+    if ('@ViewBag.Message' !== '') 
+    {
+        showToast1("Username does not exist in AD");
+        function showToast1(message)
+        {
+            var toast = document.getElementById('toast');
+            var toastMessage = document.getElementById('toast-message');
+            var toastClose = document.getElementById('toast-close');
+
+            toastMessage.textContent = message;
+
+            toast.classList.add('show');
+
+            toastClose.addEventListener('click', function() {
+                toast.classList.remove('show');
+            });
+
+        setTimeout(function() {
+            toast.classList.remove('show');
+        }, 3000); // Show toast for 3 seconds
+    }
+    }
+    if ('@ViewBag.UserActiveMessage;' !== '') {
+        showToast1("Username does not Active.Please contact administrative");
+        function showToast1(message) {
+            var toast = document.getElementById('toast');
+            var toastMessage = document.getElementById('toast-message');
+            var toastClose = document.getElementById('toast-close');
+
+            toastMessage.textContent = message;
+
+            toast.classList.add('show');
+
+            toastClose.addEventListener('click', function () {
+                toast.classList.remove('show');
+            });
+
+            setTimeout(function () {
+                toast.classList.remove('show');
+            }, 3000); // Show toast for 3 seconds
+        }
+    }
+    
+
+</script>
