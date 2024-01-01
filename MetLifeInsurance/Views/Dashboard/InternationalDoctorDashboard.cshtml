@@ -1,8 +1,10 @@
-﻿<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
+﻿
 @{
-    ViewData["Title"] = "DoctorDashboard";
+    ViewData["Title"] = "InternationalDoctorDashboard";
 }
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
 <div class="page-title">
     <div class="title_left">
@@ -35,7 +37,7 @@
 
         </div>
     </div>
-   
+
 
 </div>
 <div id="loadPartialView"></div>
@@ -43,7 +45,7 @@
 
 <script type="text/javascript">
 
-   
+    debugger;
     $(document).ready(function () {
         getdashboardlist();
         var b = document.getElementById("Fromdate").value;
@@ -56,13 +58,13 @@
     });
 
     function getdashboardlist() {
-       
-        $('#loadPartialView').load("/doctor/wise/dashboard", JSON.parse(getSearchModel()),
+        debugger;
+        $('#loadPartialView').load("/internationaldoctor/wise/dashboard", JSON.parse(getSearchModel()),
             function (response, status, xhr) {
 
                 if (status == "error") {
                     var msg = "Sorry but there was an error: ";
-                    ShowMessage("error", "error", msg + xhr.status + " " + xhr.statusText);
+
                 };
 
             });
@@ -84,4 +86,8 @@
         window.location.href = "/ats/detail/export";
     }
 </script>
+
+
+
+
 

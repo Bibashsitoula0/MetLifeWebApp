@@ -17,7 +17,7 @@
     <div id="loadPartialView"></div>
     
 <script type="text/javascript">
-    debugger;
+   
     
     $(document).ready(function () {
         getdashboarduserlist();
@@ -47,7 +47,7 @@
     });
 
     function getdashboarduserlist() {
-        debugger;
+       
         $('#loadPartialView').load("/userlistall"),
             function   (response, status, xhr) {
 
@@ -84,7 +84,7 @@
 
 
     function activeInActiveUser(event) {
-        debugger;
+       
         var checkbox = document.getElementsByName("IsDiscontinue")[0];
         var isChecked = checkbox.checked;
         let conf = confirm(`Are you sure to change user status ?`);

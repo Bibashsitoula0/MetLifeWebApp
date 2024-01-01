@@ -1,0 +1,150 @@
+﻿@{
+
+    string[] orderStatus = ViewBag.Ordersta;
+
+
+    int pageNumber = ViewBag.pageNumber;
+    int pagesize = 10;
+    string fromdate = ViewBag.formDate;
+    string todate = ViewBag.toDate;
+    string order = ViewBag.order;
+    string status = ViewBag.status;
+
+}
+
+<script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@{
+    ViewData["Title"] = "Orders List";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="x_panel">
+            <div class="col-md-12 ">
+                <div class="x_content">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-1 col-sm-1 ">Order :</label>
+                        <div class="col-md-3 col-sm-3 ">
+                            <input type="text" id="Order" required="required" name="Order"
+                                   class="form-control " value="@order">
+                        </div>
+                      
+                       
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">Order Status :</label>
+                        <div class="col-md-3 col-sm-3 ">
+
+                            <select class="form-control" id="booking_status" name="booking_status" style="margin-top:10px;">
+                                <option value="">Select All</option>
+                                @foreach (var pendingstatus in orderStatus)
+                                {
+                                    <option value="@pendingstatus">@pendingstatus</option>
+                                }
+                            </select>
+
+                        </div>
+
+
+                       
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">From Date :</label>
+                        <div class="col-md-3 col-sm-3 " style="margin-top:10px;">
+                            <input id="Fromdate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                        </div>
+
+
+
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">To Date :</label>
+                        <div class="col-md-3 col-sm-3 " style="margin-top:10px;">
+                            <input id="Todate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'">
+                        </div>
+
+
+                        <div class="col-md-4 col-sm-4 col-sm-4" style="margin-top:10px;">
+                            <button id="filter" type="submit" class="btn btn-success">Search</button>
+                            <button id="reset" type="submit" class="btn btn-primary">Reset</button>
+                            <button id="export" type="submit" onclick="exportExcel()" class="btn btn-primary">Export</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="loadPartialView"></div>
+
+<script type="text/javascript">
+
+    var isFilter = false;
+
+
+    $(document).ready(function () {
+
+        getfilterlist();
+        $("#booking_status").val('@ViewBag.status');
+
+    });
+
+    $('#filter').off("click").on("click", function () {
+        isFilter = true;
+        getfilterlist();
+    });
+
+    $('#reset').off("click").on("click", function () {
+        isFilter = true;
+        getfilterreset();
+    });
+
+    function getSearchModel() {
+
+
+        var Filterdata = {
+            formDate: $("#Fromdate").val(),
+            toDate: $('#Todate').val(),
+            order: $('#Order').val(),
+            status: $('#booking_status').val(),           
+            page: @pageNumber,
+            pageSize: @pagesize
+                };
+        var model = JSON.stringify(Filterdata);
+
+        return model;
+
+    }
+
+
+    function getfilterlist() {
+
+        $('#loadPartialView').load("/order/list/data", JSON.parse(getSearchModel()),
+            function (response, status, xhr) {
+
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    ShowMessage("error", "error", msg + xhr.status + " " + xhr.statusText);
+                };
+            });
+    }
+
+
+    function getfilterreset() {
+        window.location.href = `/order/list`;
+    }
+
+
+    function exportExcel() {
+
+        var formDate = $("#Fromdate").val();
+        var toDate = $('#Todate').val();
+        var order = $('#Order').val();
+        var staus = $('#booking_status').val();
+        window.location.href = `/order/export?fromdate=${formDate}&todate=${toDate}&order=${order}&status=${staus}`;
+
+
+    }
+
+
+</script>
+

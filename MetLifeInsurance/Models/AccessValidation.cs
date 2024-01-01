@@ -12,7 +12,8 @@ namespace MetLifeInsurance.Models
 
             public override void OnActionExecuting(ActionExecutingContext context)
             {
-                string username = context.HttpContext.User.Identity.Name; // Replace with your actual username retrieval logic
+
+            string username = context.HttpContext.User.Identity.Name; // Replace with your actual username retrieval logic
                 string role = Role;
                 string feature = Feature; 
                 bool hasAccess = ValidateUser.Validate(username, role, feature);

@@ -15,6 +15,15 @@ namespace MetLifeInsurance.Models
         public int pageSize { get; set; }
     }
 
-    
+    public class DashboardFilterOrder
+    {
+        public string formDate { get; set; }
+        public string toDate { get; set; }
+        public string order { get; set; }
+        public string status { get; set; }
+        public int page { get; set; }
+        public int pageSize { get; set; }
+    }
+
 
 }

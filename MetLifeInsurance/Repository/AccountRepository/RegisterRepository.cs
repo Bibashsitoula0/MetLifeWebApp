@@ -129,7 +129,7 @@ namespace MetLifeInsurance.Repository.AccountRepository
 
         public async Task<List<RegisterUser>> getUser(string username)
         {
-            string query = @"select * from  Users                 
+            string query = @"select * from Users                 
                         where
                         UserName = @username";
 

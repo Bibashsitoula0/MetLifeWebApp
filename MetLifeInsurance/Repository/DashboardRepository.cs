@@ -348,5 +348,222 @@ namespace MetLifeInsurance.Repository
                 throw;
             }
         }
+
+
+        /// <summary>
+        ///  virtual doctor
+        /// </summary>
+        /// <param name="dashboardFilter"></param>
+        /// <returns></returns>
+        public async Task<List<BookingStatus>> getvirtuualdoctorbooking(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_virtual_doctor_booking_status_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<BookingStatus>(query, parameter);
+                int colorIndex = 0;
+
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<MedicalInstituteWise>> getvirtuualdoctorinstitute(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_virtual_doctor_medical_institute_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<MedicalInstituteWise>(query, parameter);
+                int colorIndex = 0;
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<PaymentStatus>> getvirtuualdoctorpayment(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_virtual_doctor_payment_status_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<PaymentStatus>(query, parameter);
+                int colorIndex = 0;
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<DoctorNameWise>> getvirtuualdoctorstatus(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_virtual_doctor_name_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<DoctorNameWise>(query, parameter);
+
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///  international doctor
+        /// </summary>
+        /// <param name="dashboardFilter"></param>
+        /// <returns></returns>
+        /// 
+
+        public async Task<List<BookingStatus>> getinternationaldoctorbooking(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_international_doctor_booking_status_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<BookingStatus>(query, parameter);
+                int colorIndex = 0;
+
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<MedicalInstituteWise>> getinternationaldoctorinstitute(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_international_doctor_medical_institute_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<MedicalInstituteWise>(query, parameter);
+                int colorIndex = 0;
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<List<PaymentStatus>> getinternationaldoctorpayment(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_international_doctor_payment_status_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<PaymentStatus>(query, parameter);
+                int colorIndex = 0;
+                foreach (var item in results)
+                {
+                    if (colorIndex >= backgroundcolor.Length)
+                    {
+                        colorIndex = 0;
+                    }
+                    item.color = backgroundcolor[colorIndex];
+                    colorIndex++;
+                }
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<List<DoctorNameWise>> getinternationaldoctorstatus(DashboardFilter dashboardFilter)
+        {
+            try
+            {
+                var query = "exec sp_get_international_doctor_name_count @from_date, @to_date";
+                var parameter = new { from_date = dashboardFilter.formDate, to_date = dashboardFilter.toDate };
+                var results = await _dah.FetchDerivedModelAsync<DoctorNameWise>(query, parameter);
+
+                return results;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
     }
 }

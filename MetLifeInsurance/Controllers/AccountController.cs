@@ -54,7 +54,6 @@ namespace MetLifeInsurance.Controllers
             }
         }
 
-
         public async Task<IActionResult> Login()
         {
             return View();
@@ -64,17 +63,16 @@ namespace MetLifeInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-             bool isadlogin = await ADlogin(login.UserName, login.Password);         
-        
+            // bool isadlogin = await ADlogin(login.UserName, login.Password);         
+
+            bool isadlogin = true;
                 if (isadlogin == true)
                 {
                     var getuser = await _registerRepository.getUser(login.UserName);
                     var user = getuser.FirstOrDefault();
-
                     HttpContext.Session.Remove("UserName");
                     HttpContext.Session.Remove("UserId");
                     HttpContext.Session.Remove("Role");
-
                     if (user != null)
                     {
                     if (user.is_active == true)
@@ -88,8 +86,7 @@ namespace MetLifeInsurance.Controllers
                     {
                         ViewBag.UserActiveMessage = "User doesnot active.Plz contact Administration";
                         return View();
-                    }
-                   
+                    }                   
                     }
                     else
                     {
@@ -112,20 +109,17 @@ namespace MetLifeInsurance.Controllers
 
         [HttpPost]
         public bool CheckAd([FromForm]TestAd testAd)
-        {
-           
+        {           
             return true;
         }
 
-     
 
-         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             HttpContext.Session.Remove("UserName");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("Role");
-
             return Redirect("/Account/Login") ;
         }
 

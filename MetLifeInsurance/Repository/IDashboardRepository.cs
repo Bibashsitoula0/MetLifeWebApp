@@ -20,5 +20,17 @@ namespace MetLifeInsurance.Repository
         Task<List<MedicalInstituteWise>> getteledoctorinstitute(DashboardFilter dashboardFilter);
         Task<List<PaymentStatus>> getteledoctorpayment(DashboardFilter dashboardFilter);
         Task<List<DoctorNameWise>> getteledoctorstatus(DashboardFilter dashboardFilter);
+
+        // fro virtual doctor
+        Task<List<BookingStatus>> getvirtuualdoctorbooking(DashboardFilter dashboardFilter);
+        Task<List<MedicalInstituteWise>> getvirtuualdoctorinstitute(DashboardFilter dashboardFilter);
+        Task<List<PaymentStatus>> getvirtuualdoctorpayment(DashboardFilter dashboardFilter);
+        Task<List<DoctorNameWise>> getvirtuualdoctorstatus(DashboardFilter dashboardFilter);
+
+        // fro international doctor
+        Task<List<BookingStatus>> getinternationaldoctorbooking(DashboardFilter dashboardFilter);
+        Task<List<MedicalInstituteWise>> getinternationaldoctorinstitute(DashboardFilter dashboardFilter);
+        Task<List<PaymentStatus>> getinternationaldoctorpayment(DashboardFilter dashboardFilter);
+        Task<List<DoctorNameWise>> getinternationaldoctorstatus(DashboardFilter dashboardFilter);
     }
 }

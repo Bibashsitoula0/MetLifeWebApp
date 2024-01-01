@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "TeleDoctor";
+﻿@{
+    ViewData["Title"] = "VirtualDoctor";
 }
 
 @{
@@ -30,17 +29,17 @@
                         <label class="col-form-label col-md-1 col-sm-1 ">Code :</label>
                         <div class="col-md-3 col-sm-3 ">
                             <input type="text" id="Code" required="required" name="Code"
-                                   class="form-control " value="@Code">
+                                   class="form-control ">
                         </div>
 
                         <label class="col-form-label col-md-1 col-sm-1 ">Name :</label>
                         <div class="col-md-3 col-sm-3 ">
-                            <input type="text" id="Name" required="required" name="Name" value="@Name"
+                            <input type="text" id="Name" required="required" name="Name"
                                    class="form-control ">
                         </div>
                         <label class="col-form-label col-md-1 col-sm-1 ">Contact :</label>
                         <div class="col-md-3 col-sm-3 ">
-                            <input type="text" id="Contact" required="required" name="Contact" value="@Contact"
+                            <input type="text" id="Contact" required="required" name="Contact"
                                    class="form-control ">
                         </div>
 
@@ -101,28 +100,29 @@
 <div id="loadPartialView"></div>
 
 <script type="text/javascript">
-   
+    debugger;
 
-   
+    debugger;
     $(document).ready(function () {
-        getfilterlist();    
+
+
+
+
+        getfilterlist();
         var b = document.getElementById("Fromdate").value;
         var a = $("#Fromdate").val();
 
-        $("#booking_status").val('@ViewBag.booking_status');
-        $("#pending_status").val('@ViewBag.pending_status');
-
     });
 
-    
+
 
     $('#filter').off("click").on("click", function () {
         getfilterlist();
     });
 
     function getfilterlist() {
-       
-        $('#loadPartialView').load("/tele/doctor/data", JSON.parse(getSearchModel()),
+        debugger;
+        $('#loadPartialView').load("/virtual/doctor/data", JSON.parse(getSearchModel()),
             function (response, status, xhr) {
 
                 if (status == "error") {
@@ -143,9 +143,9 @@
             contact: $('#Contact').val() || "@Contact",
             page: @pageNumber,
             pageSize: @pagesize
-            };
+                };
         var model = JSON.stringify(Filterdata);
-      
+        debugger
         return model;
 
     }
@@ -156,7 +156,7 @@
 
 
     function getfilterreset() {
-       window.location.href = `/tele/doctor/list`;
+        window.location.href = `/virtual/doctor/list`;
     }
 
     function getSearchModelReset() {
@@ -172,11 +172,12 @@
             pageSize: 10
         };
         var model = JSON.stringify(Filterdata);
-         return model;
-         }
+        debugger
+        return model;
+    }
 
     function exportExcel() {
-       
+        debugger;
         var formDate = $("#Fromdate").val();
         var toDate = $('#Todate').val();
         var code = $('#Code').val();
@@ -185,7 +186,7 @@
         var name = $('#Name').val();
         var contact = $('#Contact').val();
 
-        window.location.href = `/tele/doctor/export?fromdate=${formDate}&todate=${toDate}&code=${code}&bookingstatus=${booking_status}&pendingstatus=${pending_status}&name=${name}&contact=${contact}`;
+        window.location.href = `/virtual/doctor/export?fromdate=${formDate}&todate=${toDate}&code=${code}&bookingstatus=${booking_status}&pendingstatus=${pending_status}&name=${name}&contact=${contact}`;
         getSearchModelReset();
     }
 

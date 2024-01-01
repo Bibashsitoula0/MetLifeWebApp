@@ -2213,7 +2213,7 @@ var DashBoardJS = function () {
         // Doughnut chart
         self.PaymentStatus = function (paymentstatus) {
 
-            debugger;
+            
            
             if ($('#canvasDoughnut').length) {
 
@@ -2290,13 +2290,13 @@ var DashBoardJS = function () {
 
 
         self.DrawPieChart = function (bookingcount) {
-            debugger;
+            
           
             // Pie chart
             if ($('#pieChart').length) {
 
                 var ctx = document.getElementById("pieChart");
-                debugger;
+                
 
                 var bookingCounts = bookingcount.map(function (item) {
                     return item.booking_status_count;
@@ -2313,7 +2313,7 @@ var DashBoardJS = function () {
                     return item.color;
                 });
 
-                debugger;
+                
                 var booking = {
 
                     datasets: [{
@@ -2344,13 +2344,13 @@ var DashBoardJS = function () {
         }
 
         self.DoctorDrawPieChart = function (bookingcount) {
-            debugger;
+            
             console.log("Yukta", bookingcount);
             // Pie chart
             if ($('#doctorbookingstatus').length) {
 
                 var ctx = document.getElementById("doctorbookingstatus");
-                debugger;
+                
 
                 var bookingCounts = bookingcount.map(function (item) {
                     return item.booking_status_count;
@@ -2366,7 +2366,7 @@ var DashBoardJS = function () {
                 });
                 console.log("bookingLevels", bookingLabels);
 
-                debugger;
+                
                 var booking = {
 
                     datasets: [{
@@ -2395,8 +2395,7 @@ var DashBoardJS = function () {
         }
 
         self.DoctorPaymentStatus = function (paymentstatus) {
-
-                debugger;
+                
 
                 if ($('#DoctordonotpaymentStatus').length) {
 
@@ -2418,10 +2417,8 @@ var DashBoardJS = function () {
                             data: paymentCount,
                             backgroundColor: paymentColor,
                             hoverBackgroundColor: paymentColor,
-
                         }]
                     };
-
                     var canvasDoughnut = new Chart(ctx, {
                         type: 'doughnut',
                         tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -3288,6 +3285,122 @@ var DashBoardJS = function () {
                         data: medicalcount,
                         markPoint: {
                            
+                        },
+                        markLine: {
+                            data: [{
+                                type: 'average',
+                                name: ''
+                            }]
+                        }
+                    }
+                    ]
+                });
+
+            }
+
+        };
+
+
+        self.VirtualDoctorNameStatus = function (doctorname) {
+          
+            if ($('#virtualdoctorb').length) {
+
+                var echartBar = echarts.init(document.getElementById('virtualdoctorb'), theme);
+
+                var medicalcount = doctorname.map(function (item) {
+                    return item.doctor_name_count;
+                });
+                var medicalwisestatus = doctorname.map(function (item) {
+                    return item.doctor_name;
+                });
+
+
+                echartBar.setOption({
+                    title: {
+                        text: '',
+                        subtext: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['Doctor Name Wise Reports']
+                    },
+                    toolbox: {
+                        show: false
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: medicalwisestatus
+                    }],
+                    yAxis: [{
+                        type: 'value'
+                    }],
+                    series: [{
+                        name: 'Doctor Name Wise Reports',
+                        type: 'bar',
+                        data: medicalcount,
+                        markPoint: {
+
+                        },
+                        markLine: {
+                            data: [{
+                                type: 'average',
+                                name: ''
+                            }]
+                        }
+                    }
+                    ]
+                });
+
+            }
+
+        };
+
+
+        self.InternationalDoctorNameStatus = function (doctorname) {
+
+            if ($('#internationaldoctorb').length) {
+
+                var echartBar = echarts.init(document.getElementById('internationaldoctorb'), theme);
+
+                var medicalcount = doctorname.map(function (item) {
+                    return item.doctor_name_count;
+                });
+                var medicalwisestatus = doctorname.map(function (item) {
+                    return item.doctor_name;
+                });
+
+
+                echartBar.setOption({
+                    title: {
+                        text: '',
+                        subtext: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['Doctor Name Wise Reports']
+                    },
+                    toolbox: {
+                        show: false
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: medicalwisestatus
+                    }],
+                    yAxis: [{
+                        type: 'value'
+                    }],
+                    series: [{
+                        name: 'Doctor Name Wise Reports',
+                        type: 'bar',
+                        data: medicalcount,
+                        markPoint: {
+
                         },
                         markLine: {
                             data: [{
@@ -4389,7 +4502,7 @@ var DashBoardJS = function () {
 
         //echart Donut
         self.PaymentStatus = function (paymentcount) {
-            debugger;
+            
             var data = [];
 
             if ($('#echart_donut_payment_booking').length) {
@@ -4484,7 +4597,7 @@ var DashBoardJS = function () {
 
 
         self.DoctorPaymentStatus = function (paymentcount) {
-            debugger;
+            
             var data = [];
 
             if ($('#echart_donut_physical').length) {
@@ -4578,7 +4691,7 @@ var DashBoardJS = function () {
         }
 
         self.MedicalStatus = function (medicalinstitute) {
-            debugger;
+            
             var data = [];
             if ($('#medicalpieChart').length) {
 
@@ -4684,7 +4797,7 @@ var DashBoardJS = function () {
 
 
         self.DoctorMedicalStatus = function (medicalinstitute) {
-            debugger;
+            
             var data = [];
 
 
@@ -4792,7 +4905,7 @@ var DashBoardJS = function () {
         }
 
         self.DrawPieChart = function (bookingcount) {
-            debugger;
+            
             var data = [];
 
 
@@ -4901,7 +5014,7 @@ var DashBoardJS = function () {
 
 
         self.TeleDoctorPaymentStatus = function (paymentcount) {
-            debugger;
+            
             var data = [];
 
             if ($('#echart_donut').length) {
@@ -4994,9 +5107,197 @@ var DashBoardJS = function () {
 
         }
 
+        self.VirtualDoctorPaymentStatus = function (paymentcount) {
+
+            var data = [];
+
+            if ($('#echart_donut').length) {
+
+                var echartDonut = echarts.init(document.getElementById('echart_donut'), theme);
+
+                var paymentCount = paymentcount.map(function (item) {
+                    return item.count;
+                });
+                var paymentStatus = paymentcount.map(function (item) {
+                    return item.payment_status;
+                });
+                var paymentColor = paymentcount.map(function (item) {
+                    return item.color;
+                });
+
+                data = paymentcount.map(function (item) {
+                    return {
+                        value: item.count,
+                        name: item.payment_status
+                    }
+                });
+
+
+                echartDonut.setOption({
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    calculable: true,
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: paymentStatus
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'center',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Payment Status',
+                        type: 'pie',
+                        radius: ['35%', '55%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true
+                                },
+                                labelLine: {
+                                    show: true
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    position: 'center',
+                                    textStyle: {
+                                        fontSize: '14',
+                                        fontWeight: 'normal'
+                                    }
+                                }
+                            }
+                        },
+                        data: data,
+                    }]
+                });
+
+            }
+
+        }
+
+        self.InternationalDoctorPaymentStatus = function (paymentcount) {
+
+            var data = [];
+
+            if ($('#echart_donut').length) {
+
+                var echartDonut = echarts.init(document.getElementById('echart_donut'), theme);
+
+                var paymentCount = paymentcount.map(function (item) {
+                    return item.count;
+                });
+                var paymentStatus = paymentcount.map(function (item) {
+                    return item.payment_status;
+                });
+                var paymentColor = paymentcount.map(function (item) {
+                    return item.color;
+                });
+
+                data = paymentcount.map(function (item) {
+                    return {
+                        value: item.count,
+                        name: item.payment_status
+                    }
+                });
+
+
+                echartDonut.setOption({
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    calculable: true,
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: paymentStatus
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'center',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Payment Status',
+                        type: 'pie',
+                        radius: ['35%', '55%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true
+                                },
+                                labelLine: {
+                                    show: true
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    position: 'center',
+                                    textStyle: {
+                                        fontSize: '14',
+                                        fontWeight: 'normal'
+                                    }
+                                }
+                            }
+                        },
+                        data: data,
+                    }]
+                });
+
+            }
+
+        }
+
         //echart Pie
         self.DoctorDrawPieChart = function (bookingcount) {
-            debugger;
+            
             var data = [];
 
          
@@ -5104,7 +5405,7 @@ var DashBoardJS = function () {
         }
 
         self.TeleDoctorDrawPieChart = function (bookingcount) {
-            debugger;
+            
             var data = [];
 
             console.log("teleebookingcount", bookingcount);
@@ -5212,8 +5513,226 @@ var DashBoardJS = function () {
             }
         }
 
+        self.InternationalDoctorDrawPieChart = function (bookingcount) {
+
+            var data = [];
+
+            console.log("teleebookingcount", bookingcount);
+
+            if ($('#echart_pie').length) {
+
+                var echartPie = echarts.init(document.getElementById('echart_pie'), theme);
+
+                var bookingCounts = bookingcount.map(function (item) {
+                    return item.booking_status_count;
+                });
+
+                console.log("hey", bookingCounts);
+
+                var bookingLabels = bookingcount.map(function (item) {
+                    return item.booking_status;
+                });
+                console.log("bookingLevels", bookingLabels);
+
+                var bookingcolor = bookingcount.map(function (item) {
+                    return item.color;
+                });
+
+                data = bookingcount.map(function (item) {
+                    return {
+                        value: item.booking_status_count,
+                        name: item.booking_status
+                    }
+                });
+
+                echartPie.setOption({
+                    tooltip: {
+                        show: true,
+                        trigger: 'item',
+                        formatter: '{b} : {c} ({d}%)'
+
+                    },
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: bookingLabels
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: 'Booking Status',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '48%'],
+                        data: data
+                    },
+                    ]
+                });
+
+                var dataStyle = {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+
+                var placeHolderStyle = {
+                    normal: {
+                        color: 'rgba(0,0,0,0)',
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    },
+                    emphasis: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                };
+
+            }
+        }
+
+
+        self.VirtualDoctorDrawPieChart = function (bookingcount) {
+
+            var data = [];
+
+           
+            if ($('#echart_pie').length) {
+
+                var echartPie = echarts.init(document.getElementById('echart_pie'), theme);
+
+                var bookingCounts = bookingcount.map(function (item) {
+                    return item.booking_status_count;
+                });
+
+                console.log("hey", bookingCounts);
+
+                var bookingLabels = bookingcount.map(function (item) {
+                    return item.booking_status;
+                });
+                console.log("bookingLevels", bookingLabels);
+
+                var bookingcolor = bookingcount.map(function (item) {
+                    return item.color;
+                });
+
+                data = bookingcount.map(function (item) {
+                    return {
+                        value: item.booking_status_count,
+                        name: item.booking_status
+                    }
+                });
+
+                echartPie.setOption({
+                    tooltip: {
+                        show: true,
+                        trigger: 'item',
+                        formatter: '{b} : {c} ({d}%)'
+
+                    },
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: bookingLabels
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: 'Booking Status',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '48%'],
+                        data: data
+                    },
+                    ]
+                });
+
+                var dataStyle = {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+
+                var placeHolderStyle = {
+                    normal: {
+                        color: 'rgba(0,0,0,0)',
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    },
+                    emphasis: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                };
+
+            }
+        }
+
         self.TeleDoctorMedicalStatus = function (medicalinstitute) {
-            debugger;
+            
             var data = [];
 
           
@@ -5320,6 +5839,221 @@ var DashBoardJS = function () {
             }
         }
 
+        self.VirtualDoctorMedicalStatus = function (medicalinstitute) {
+
+            var data = [];
+
+
+
+            if ($('#echart_pies').length) {
+
+                var echartPie = echarts.init(document.getElementById('echart_pies'), theme);
+
+                var medicalCounts = medicalinstitute.map(function (item) {
+                    return item.medical_institute_count;
+                });
+
+
+
+                var medicallabels = medicalinstitute.map(function (item) {
+                    return item.medical_institute;
+                });
+
+                var bookingcolor = medicalinstitute.map(function (item) {
+                    return item.color;
+                });
+
+                data = medicalinstitute.map(function (item) {
+                    return {
+                        value: item.medical_institute_count,
+                        name: item.medical_institute
+                    }
+                });
+
+                echartPie.setOption({
+                    tooltip: {
+                        show: true,
+                        trigger: 'item',
+                        formatter: '{b} : {c} ({d}%)'
+
+                    },
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: medicallabels
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: 'Medical Status',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '48%'],
+                        data: data
+                    },
+                    ]
+                });
+
+                var dataStyle = {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+
+                var placeHolderStyle = {
+                    normal: {
+                        color: 'rgba(0,0,0,0)',
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    },
+                    emphasis: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                };
+
+            }
+        }
+
+        self.InternationalDoctorMedicalStatus = function (medicalinstitute) {
+
+            var data = [];
+
+
+
+            if ($('#echart_pies').length) {
+
+                var echartPie = echarts.init(document.getElementById('echart_pies'), theme);
+
+                var medicalCounts = medicalinstitute.map(function (item) {
+                    return item.medical_institute_count;
+                });
+
+
+
+                var medicallabels = medicalinstitute.map(function (item) {
+                    return item.medical_institute;
+                });
+
+                var bookingcolor = medicalinstitute.map(function (item) {
+                    return item.color;
+                });
+
+                data = medicalinstitute.map(function (item) {
+                    return {
+                        value: item.medical_institute_count,
+                        name: item.medical_institute
+                    }
+                });
+
+                echartPie.setOption({
+                    tooltip: {
+                        show: true,
+                        trigger: 'item',
+                        formatter: '{b} : {c} ({d}%)'
+
+                    },
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        data: medicallabels
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {
+                                show: true,
+                                title: "Restore"
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: "Save Image"
+                            }
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: 'Medical Status',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '48%'],
+                        data: data
+                    },
+                    ]
+                });
+
+                var dataStyle = {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+
+                var placeHolderStyle = {
+                    normal: {
+                        color: 'rgba(0,0,0,0)',
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    },
+                    emphasis: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                };
+
+            }
+        }
         //echart Mini Pie
 
         if ($('#echart_mini_pie').length) {

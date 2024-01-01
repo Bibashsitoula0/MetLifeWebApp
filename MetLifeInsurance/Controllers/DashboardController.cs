@@ -97,7 +97,67 @@ namespace MetLifeInsurance.Controllers
             return PartialView("GetDashboardTeleDoctorPieChartData", dashboard);
 
         }
+
+
+        [HttpGet]
+        [Route("virtual/doctor/dashboard")]
+        public async Task<IActionResult> VirtualDashboard()
+        {
+
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [Route("virtualdoctor/wise/dashboard")]
+        public async Task<Object> GetDashboardVirtualDoctorPieChartData(DashboardFilter dashboardFilter)
+        {
+
+            var dashboard = new DashBoardVm();
+            dashboard.bookingstatus = await _dashboardRepository.getvirtuualdoctorbooking(dashboardFilter);
+            dashboard.medicalstatus = await _dashboardRepository.getvirtuualdoctorinstitute(dashboardFilter);
+            dashboard.paymentstatus = await _dashboardRepository.getvirtuualdoctorpayment(dashboardFilter);
+            dashboard.doctorstatus = await _dashboardRepository.getvirtuualdoctorstatus(dashboardFilter);
+
+            return PartialView("GetDashboardVirtualDoctorPieChartData", dashboard);
+
+        }
+
+
+
+
+
+
+        [HttpGet]
+        [Route("international/doctor/dashboard")]
+        public async Task<IActionResult> InternationalDoctorDashboard()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [Route("internationaldoctor/wise/dashboard")]
+        public async Task<Object> GetDashboardInternationalDoctorPieChartData(DashboardFilter dashboardFilter)
+        {
+
+            var dashboard = new DashBoardVm();
+            dashboard.bookingstatus = await _dashboardRepository.getinternationaldoctorbooking(dashboardFilter);
+            dashboard.medicalstatus = await _dashboardRepository.getinternationaldoctorinstitute(dashboardFilter);
+            dashboard.paymentstatus = await _dashboardRepository.getinternationaldoctorpayment(dashboardFilter);
+            dashboard.doctorstatus = await _dashboardRepository.getinternationaldoctorstatus(dashboardFilter);
+
+            return PartialView("GetDashboardInternationalDoctorPieChartData", dashboard);
+
+        }
+
+
+
+
+
     }
+
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class CustomAuthorizationAttribute : ActionFilterAttribute
@@ -144,8 +204,8 @@ namespace MetLifeInsurance.Controllers
             HttpContext httpContext = _httpContextAccessor.HttpContext;
 
             // Access session data
-            string sessionUsername = httpContext.Session.GetString("UserName");
-            string sessionRole = httpContext.Session.GetString("Role");
+            string sessionUsername = httpContext.Session.GetString("UserName").Trim();
+            string sessionRole = httpContext.Session.GetString("Role").Trim();
 
             if (role !=null)
             {

@@ -18,6 +18,7 @@
  
 <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @{
     ViewData["Title"] = "HomeTesting";
 }
@@ -31,42 +32,41 @@
 											<label class="col-form-label col-md-1 col-sm-1 ">Code :</label>
 											<div class="col-md-3 col-sm-3 ">
                                               <input type="text" id="Code" required="required" name="Code"
-													class="form-control ">
+													class="form-control " value="@Code">
 											</div>
                         <label class="col-form-label col-md-1 col-sm-1 " >Name :</label>
                         <div class="col-md-3 col-sm-3 ">
-                            <input type="text" id="Name" required="required" name="Name"
+                            <input type="text" id="Name" required="required" name="Name" value="@Name"
                                    class="form-control ">
                         </div>
                         <label class="col-form-label col-md-1 col-sm-1 ">Contact :</label>
                         <div class="col-md-3 col-sm-3 ">
-                            <input type="text" id="Contact" required="required" name="Contact"
+                            <input type="text" id="Contact" required="required" name="Contact" value="@Contact"
                                    class="form-control ">
                         </div>
 
-
                         <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">Booking Status :</label>
 											<div class="col-md-3 col-sm-3 ">
-                            <select class="select2_group form-control " id="booking_status" name="booking_status" style="margin-top:10px;">
 
-                                <option value="">Select All</option>
-                                @foreach (var booking in bookingstatus)
-                                {
-                                    <option value="@booking">@booking</option>
-                                }
-						         	</select>        
-								</div>
-
-
-                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">Pending Status :</label>
-
-											 <div class="col-md-3 col-sm-3 ">
-                            <select class="select2_group form-control required" id="pending_status" name="pending_status" style="margin-top:10px;">
-
+                            <select class="form-control" id="booking_status" name="booking_status" style="margin-top:10px;" >
                                 <option value="">Select All</option>
                                 @foreach (var pendingstatus in pending)
                                 {
                                     <option value="@pendingstatus">@pendingstatus</option>
+                                }
+                            </select>
+
+								</div>
+
+
+                        <label class="col-form-label col-md-1 col-sm-1 " style="margin-top:10px;">Payment Status :</label>
+
+											 <div class="col-md-3 col-sm-3 ">
+                            <select class="select2_group form-control required" id="pending_status" name="pending_status" style="margin-top:10px;" >
+                                <option value="">Select All</option>
+                                @foreach (var booking in bookingstatus)
+                                {
+                                    <option value="@booking">@booking</option>
                                 }
 													
 							</select>         
@@ -102,25 +102,54 @@
     <div id="loadPartialView"></div>
 
     <script type="text/javascript">
-    debugger;
-    
-   debugger;
-     $(document).ready(function () {
 
-          getfilterlist();
-       
+    var isFilter = false;
+
+
+    $(document).ready(function () {
+ 
+     
+
+        getfilterlist();
+        $("#booking_status").val('@ViewBag.booking_status');
+        $("#pending_status").val('@ViewBag.pending_status');
+      
+  
     });
 
     $('#filter').off("click").on("click", function () {
+        isFilter = true;
         getfilterlist();
     });
 
     $('#reset').off("click").on("click", function () {
+        isFilter = true;
         getfilterreset();
     });
 
+    function getSearchModel() {
+     
+
+        var Filterdata = {
+            formDate: $("#Fromdate").val(),
+            toDate: $('#Todate').val(),
+            code: $('#Code').val() ,
+            booking_status: $('#booking_status').val(),
+            pending_status: $('#pending_status').val(),
+            name: $('#Name').val(),
+            contact: $('#Contact').val(),
+            page: @pageNumber,
+            pageSize: @pagesize
+            };
+        var model = JSON.stringify(Filterdata);
+    
+        return model;
+
+    }
+
+
      function getfilterlist() {
-        debugger;
+        
         $('#loadPartialView').load("/home/testing/list", JSON.parse(getSearchModel()),
             function (response, status, xhr) {
 
@@ -129,53 +158,13 @@
                     ShowMessage("error", "error", msg + xhr.status + " " + xhr.statusText);
                 };
           });
-    }
-
-       function getSearchModel() {
-           debugger;
-        var Filterdata = {
-            formDate: $("#Fromdate").val() || "@fromdate",
-            toDate: $('#Todate').val() || "@todate",
-            code: $('#Code').val() || "@Code",
-            booking_status: $('#booking_status').val() || "@booking_status",
-            pending_status: $('#pending_status').val() || "@pending_status",
-            name: $('#Name').val() || "@Name",
-            contact: $('#Contact').val() || "@Contact",
-            page: @pageNumber,
-            pageSize: @pagesize
-        };
-        var model = JSON.stringify(Filterdata);
-        debugger
-        return model;
-
-       }
-
-    $('#reset').off("click").on("click", function () {
-        getfilterreset();
-    });
+    }   
 
 
     function getfilterreset() {
         window.location.href = `/hometesting`;
     }
 
-    function getSearchModelReset() {
-        var Filterdata = {
-            formDate: $("#Fromdate").val(''),
-            toDate: $('#Todate').val(''),
-            code: $('#Code').val(''),
-            booking_status: $('#booking_status').val(''),
-            pending_status: $('#pending_status').val(''),
-            name: $('#Name').val(''),
-            contact: $('#Contact').val(''),
-            page: 1,
-            pageSize: 10
-        };
-        var model = JSON.stringify(Filterdata);
-        debugger
-        return model;
-
-    }
 
     function exportExcel() {
 
@@ -188,8 +177,10 @@
         var contact = $('#Contact').val();
 
         window.location.href = `/home/testing/export?fromdate=${formDate}&todate=${toDate}&code=${code}&bookingstatus=${booking_status}&pendingstatus=${pending_status}&name=${name}&contact=${contact}`;
-        getSearchModelReset();
+    
 
         }
+
+   
     </script>
 

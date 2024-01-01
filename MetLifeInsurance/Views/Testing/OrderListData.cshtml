@@ -1,0 +1,541 @@
+﻿
+
+<link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="~/Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+<link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+<style>
+    .medical-institute-color {
+        color: blue; /* Replace with the desired color */
+        background-color: rgba(87, 217, 237, 0.1);
+    }
+
+    .pending-status {
+        background-color: red;
+        color: white !important;
+    }
+
+    .completed-status {
+        background-color: green;
+        color: white !important;
+    }
+
+    /* Styles for the star rating */
+    .rating {
+        display: inline-block;
+    }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            float: right;
+            cursor: pointer;
+            color: #ddd;
+        }
+
+            .rating label:before {
+                content: "\2606";
+                font-size: 24px;
+            }
+
+        .rating input:checked ~ label:before {
+            content: "\2605";
+            color: gold;
+        }
+
+        .rating label:hover:before {
+            content: "\2605";
+            color: gold;
+        }
+
+    .card {
+        margin-bottom: 6px;
+    }
+
+    .pagination {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+        .pagination ul.pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 0;
+            border-radius: 4px;
+        }
+
+            .pagination ul.pagination li {
+                display: inline;
+            }
+
+                .pagination ul.pagination li a,
+                .pagination ul.pagination li span {
+                    position: relative;
+                    float: left;
+                    padding: 6px 12px;
+                    margin-left: -1px;
+                    line-height: 1.42857143;
+                    color: #428bca;
+                    text-decoration: none;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                }
+
+                .pagination ul.pagination li:first-child a,
+                .pagination ul.pagination li:first-child span {
+                    margin-left: 0;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+
+                .pagination ul.pagination li:last-child a,
+                .pagination ul.pagination li:last-child span {
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                }
+
+                .pagination ul.pagination li a:hover,
+                .pagination ul.pagination li a:focus,
+                .pagination ul.pagination li span:hover,
+                .pagination ul.pagination li span:focus {
+                    z-index: 2;
+                    color: #2a6496;
+                    background-color: #eee;
+                    border-color: #ddd;
+                }
+
+            .pagination ul.pagination .disabled span,
+            .pagination ul.pagination .disabled a,
+            .pagination ul.pagination .disabled a:hover,
+            .pagination ul.pagination .disabled a:focus {
+                color: #777;
+                cursor: not-allowed;
+                background-color: #fff;
+                border-color: #ddd;
+            }
+
+            .pagination ul.pagination .active span,
+            .pagination ul.pagination .active a,
+            .pagination ul.pagination .active a:hover,
+            .pagination ul.pagination .active a:focus {
+                z-index: 3;
+                color: #fff;
+                background-color: #428bca;
+                border-color: #428bca;
+                cursor: default;
+            }
+</style>
+
+@using X.PagedList.Mvc
+@using X.PagedList;
+@model IPagedList<MetLifeInsurance.Models.Order>
+
+@{
+    string fromdate = ViewBag.formDate;
+    string toDate = ViewBag.toDate;
+    string status = ViewBag.status;
+    string order = ViewBag.order;
+  
+}
+
+<div class="page-title" style="margin-top:30px;">
+</div>
+<div class="col-md-12 col-sm-12 " style="margin-top:50px;">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Orders List <small></small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>S.N</th>
+                                    <th>Order Id</th>
+                                    <th> Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                 @*    <th>Invoice</th> *@
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.serial_number</td>
+                                        <td>@item.order_id</td>
+                                        <td>@item.biling_first_name @item.biling_last_name</td>
+                                        <td>@item.date_created</td>
+                                      
+                                
+
+                                         
+                                            @switch (item.status.ToLower())
+                                            {
+                                                case "completed":
+                                                <td class="text-center"><span class="badge" style="background-color:lightskyblue; color:white;font-size:30px;">@item.status</span></td>
+                                                    break;
+                                                case "processing":
+                                                <td class="text-center"><span class="badge" style="background-color:#28a745; color:white ; font-size:15px;">@item.status</span><br /></td>
+                                                    break;
+                                                case "refund":
+                                                <td class="text-center"><span class="badge" style="background-color:darkgray; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                    break;
+                                                case "failed":
+                                                <td class="text-center"><span class="badge" style="background-color:red; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                    break;
+                                                 default:
+                                                <td class="text-center"><span class="badge" style="background-color:aqua; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                    break;
+                                            }
+               
+                               
+
+
+                                        <td>@item.total</td>                                      
+                                      @*   <td>@item.totalcount</td> *@
+                                        <td>
+                                             <div style="display:block;">
+                                                <div id="details" style="display: inline-block;">
+                                                    <a class="btn" style="color:dodgerblue" data-toggle="modal" data-target="#myModals" title="Edit"
+                                                       onclick="popupOrder('@item.transaction_id','@item.biling_city','@item.date_created','@item.biling_first_name','@item.biling_last_name','@item.biling_adress','@item.biling_email','@item.biling_phone',
+                                                       '@item.biling_state','@item.payment_method','@item.payment_method_title',
+                                                      '@item.shipping_first_name','@item.shipping_last_name','@item.shipping_city','@item.shipping_state','@item.date_created',
+                                                       '@item.status','@item.order_id','@item.shipping_address1')">
+                                                        <span class="fa fa-eye"></span>
+                                                    </a>
+                                                </div>                                              
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                }
+                            </tbody>
+                        </table>
+                     <div class="col-sm-9" style="float:right;">
+                            <div class="pagination" style="float:right;">
+                                <ul class="pagination">
+
+                                    <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
+                                        <a href="/order/list?pageNumber=1&order=@order&status=@status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-left"></i></a>
+                                    </li>
+                                    <li class="paginate_button previous @(Model.HasPreviousPage ? "" : "disabled")">
+                                        <a href="/order/list?pageNumber=@(Model.PageNumber - 1)&order=@order&status=@status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-left"></i></a>
+                                    </li>
+                                    @if (Model.PageNumber > 3)
+                                    {
+                                        <li>
+                                            <a href="/order/list?pageNumber=1&order=@order&status=@status&fromdate=@fromdate&todate=@toDate">1</a>
+                                        </li>
+                                        @if (Model.PageNumber > 4)
+                                        {
+                                            <li class="disabled"><a>...</a></li>
+                                        }
+                                    }
+                                    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+                                    {
+                                        if (i > 0 && i <= Model.PageCount)
+                                        {
+                                            <li class="@(Model.PageNumber == i ? "active" : "")">
+                                                <a href="/order/list?pageNumber=@i&order=@order&status=@status&fromdate=@fromdate&todate=@toDate">@i</a>
+                                            </li>
+                                        }
+                                    }
+                                    @if (Model.PageNumber < Model.PageCount - 2)
+                                    {
+                                        @if (Model.PageNumber < Model.PageCount - 3)
+                                        {
+                                            <li class="disabled"><a>...</a></li>
+                                        }
+                                        <li>
+                                            <a href="/order/list?pageNumber=@Model.PageCount&order=@order&status=@status&fromdate=@fromdate&todate=@toDate">@Model.PageCount</a>
+                                        </li>
+                                    }
+                                    <li class="paginate_button next @(Model.HasNextPage ? "" : "disabled")">
+                                        <a href="/order/list?pageNumber=@(Model.PageNumber + 1)&order=@order&status=@status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                    <li class="paginate_button next @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+                                        <a href="/order/list?pageNumber=@Model.PageCount&order=@order&status=@status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-right"></i></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="x_content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen" role="document">
+                    <div class="modal-content" style="width: 1000px; height: 450px;background-color:#ededed;">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel" style="color:black;">Order Detail</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+
+                                    <div class="clearfix"></div>
+
+
+                                    <div class="x_content" style="margin-top:-20px;">
+
+                                        <section class="content invoice">
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row invoice-info">
+                                                        <div class="col-sm-4 invoice-col">
+                                                            <div class="card-item">
+                                                                <strong style="color:black;">General</strong><br>
+                                                                <p>Date Created:</p>
+                                                                <p id="generaldatecreated" style="margin-top:-15px;"></p>
+                                                            </div>
+                                                             <div class="card-item">
+                                                                <p>Status:</p>
+                                                                <p id="generalstatus" style="margin-top:-15px;"></p>
+                                                            </div>
+                                                            <div class="card-item">
+                                                                <p>Customer:</p>
+                                                                <p id="generalcustomer" style="margin-top:-15px;"></p>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div class="col-sm-4 invoice-col">
+                                                            <div class="card-item">
+                                                                <strong style="color:black;">Billing </strong><br>
+                                                                <p id="billing" style="margin-top:5px;"></p>                                                        
+                                                                <p id="billingplace" style="margin-top:-15px;"></p>
+                                                                <p id="billingarea" style="margin-top:-15px;"></p>
+                                                                <p id="billingstate" style="margin-top:-15px;"></p>
+                                                             
+
+                                                            </div>
+                                                             <div class="card-item">
+                                                             
+                                                                <p>Email address:</p>
+                                                                <p id="bilingemailaddress" style="margin-top:-15px;"></p>
+
+                                                            </div>
+                                                             <div class="card-item">
+                                                             
+                                                                <p>Phone:</p>
+                                                                <p id="bilingphone" style="margin-top:-15px;"></p>
+                                                              
+
+                                                            </div>
+                                                            <div class="card-item">
+                                                                <p>Payment Network:</p>
+                                                                <p id="bilingpaymentNetwork" style="margin-top:-15px;"></p>
+                                                             
+
+                                                                <div class="card-item">                                                            
+                                                                    <p>Payment Id:</p>
+                                                                    <p id="bilingpaymentid" style="margin-top:-15px;"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 invoice-col">
+                                                            <div class="card-item">
+                                                                <strong style="color:black;">Shipping</strong><br>
+                                                                <p id="shipingall" style="margin-top:5px;"></p>
+                                                                <p id="shipingallplace" style="margin-top:-15px;"></p>
+                                                                <p id="shipingallarea" style="margin-top:-15px;"></p>
+                                                                <p id="shipingallstate" style="margin-top:-15px;"></p>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="clearfix"></div>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../vendors/jquery/dist/jquery.min.js"></script>
+
+<script src="~/Content/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
+<script src="~/Content/vendors/iCheck/icheck.min.js"></script>
+<script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="~/Content/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/Content/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="~/Content/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="~/Content/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="~/Content/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="~/Content/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="~/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="~/Content/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="~/Content/vendors/jszip/dist/jszip.min.js"></script>
+<script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="~/Content/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="~/Content/build/js/custom.min.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7c38c12a3fed9e80","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2023.4.0","si":100}' crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $(".dataTables_info").remove();
+        $(".dataTables_paginate").remove();
+        $("#datatable-responsive_length").remove();
+
+
+        // Handle page size select change event
+        $('#pageSizeSelect').change(function () {
+            var selectedPageSize = $(this).val();
+            var currentPage = getCurrentPage();
+            updatePageSizeInLinks(selectedPageSize);
+
+            // Redirect to the new URL with updated page size and current page
+            window.location.href = `/international/doctor/list?page=${currentPage}&pageSize=${selectedPageSize}`;
+        });
+
+        // Function to retrieve the current page number
+        function getCurrentPage() {
+            var currentPage = parseInt($('.pagination li.active a').attr('href').split('=')[1]);
+            return currentPage;
+        }
+
+        // Function to update the page size in the pagination links
+
+        function updatePageSizeInLinks(pageSize) {
+            $('.pagination a').each(function () {
+                var href = $(this).attr('href');
+
+                // Check if href exists before performing the replacement
+                if (href) {
+                    // Replace the page size value in the href attribute
+                    var updatedHref = href.replace(/(size=)\d+/, '$1' + pageSize);
+
+                    // Update the href attribute with the new page size value
+                    $(this).attr('href', updatedHref);
+                }
+            });
+        }
+
+    });
+
+    function popupFeedBacks(physicaldoctorid, type, rating, remarks) {
+
+        $("#internationaldoctorIds").val(physicaldoctorid);
+        $("#feedback").val(type.trim());
+        $("input[name='rating'][value='" + rating + "']").prop("checked", true);
+        $("textarea[name='message']").val(remarks);
+
+    }
+
+    function SubmitFeedback() {
+        var rating = $("input[name='rating']:checked").val();
+        // Get the type value
+        var type = $("#feedback").val();
+        // Get the remarks value
+        var remarks = $("textarea[name='message']").val();
+
+        var Id = $("#internationaldoctorIds").val();
+        console.log("internationaldoctorIds", Id);
+        let conf = confirm(`Are you sure you want to send feedback ?`);
+        if (!conf) {
+            window.location.href = "/international/doctor/list";
+            return;
+        } else {
+            window.location.href = `/Internationaldoctorfeedback?id=${Id}&rating=${rating}&type=${type}&remarks=${remarks}`;
+        }
+    }
+
+    debugger;
+
+    function popupOrder(transcationid,bilingcity,datecreated,biling_first_name, biling_last_name, biling_adress, biling_email, biling_phone, biling_state,
+        payment_method, payment_method_title, shipping_first_name, shipping_last_name, shipping_city,
+        shipping_state, date_created, status, order_id, shipping_address) {
+
+        debugger;
+
+        $("#biling_adress").text(biling_adress);
+        $("#bilingemailaddress").text(biling_email);
+        $("#bilingphone").text(biling_phone);
+        $("#Institute").text(biling_state);
+        $("#bilingpaymentid").text(transcationid);
+        $("#bilingpaymentNetwork").text(payment_method_title);
+        $("#Institute").text(shipping_first_name);
+        $("#Institute").text(shipping_last_name);
+        $("#shipingallplace").text(shipping_address);
+        $("#shipingallarea").text(shipping_city);
+        $("#shipingallstate").text(shipping_state);
+        $("#generaldatecreated").text(datecreated);
+        $("#generalstatus").text(status);
+        $("#generalcustomer").text(order_id);
+
+        var c = biling_first_name +   biling_last_name;
+        $("#billing").text(c);
+        $("#billingplace").text(biling_adress);
+        $("#billingarea").text(bilingcity);
+        $("#billingstate").text(biling_state);
+
+        var shippingaddress = shipping_first_name + shipping_last_name;
+
+        $("#shipingallplace").text(shippingaddress);
+
+    }
+
+ 
+
+</script>
+

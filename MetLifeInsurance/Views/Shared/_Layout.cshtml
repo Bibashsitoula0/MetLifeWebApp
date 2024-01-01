@@ -4,8 +4,8 @@
 
 @{
     string roles;
-    var usernames = _httpContextAccessor.HttpContext.Session.GetString("UserName");
-    var Role = _httpContextAccessor.HttpContext.Session.GetString("Role");
+    var usernames = _httpContextAccessor.HttpContext.Session.GetString("UserName").Trim();
+    var Role = _httpContextAccessor.HttpContext.Session.GetString("Role").Trim();
 }
 
 <!DOCTYPE html>
@@ -89,6 +89,9 @@
                                         <li class="current-page"><a href="/Dashboard">Home Testing Service Dashboard</a></li>
                                         <li><a href="/doctor/dashboard">Physical Doctor Dashboard</a></li>
                                         <li><a href="/tele/doctor/dashboard">Tele Doctor Dashboard</a></li>
+                                        <li><a href="/virtual/doctor/dashboard">Virtual Doctor Dashboard</a></li>
+                                        <li><a href="/international/doctor/dashboard">International Doctor Dashboard</a></li>
+                                      
                                     </ul>
                                 </li>
                                 @if (Role == "admin")
@@ -100,13 +103,16 @@
                                         </ul>
                                     </li>
                                 }
-                                
+
                                 <li class="active">
                                     <a class="disabled-link"><i class="fa fa-book"></i> Booking List <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block;">
                                         <li><a href="/hometesting">Home Testing</a></li>
                                         <li><a href="/physical/doctor/list">Physical Doctor</a></li>
                                         <li><a href="/tele/doctor/list">Tele Doctor</a></li>
+                                        <li><a href="/virtual/doctor/list">Virtual Doctor</a></li>
+                                        <li><a href="/international/doctor/list">International Doctor</a></li>
+                                        <li><a href="/order/list">Order</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -136,8 +142,7 @@
                                         @username
                                     </a>
                                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-
-                                        <a href="/Account/LogOut" class="btn btn-link navbar-btn navbar-link" style="color:black;font-size:12px;text-decoration:none;">Logout</a>
+                                        <a href="/Account/LogOut" class="btn btn-link navbar-btn navbar-link" style="color:black;font-size:12px;text-decoration:none;width: 200px;">Logout</a>
 
                                     </div>
                                     

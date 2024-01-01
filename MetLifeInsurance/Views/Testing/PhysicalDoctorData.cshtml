@@ -651,7 +651,7 @@
     });
 
     function popupFeedBacks(physicaldoctorid, type, rating, remarks) {
-        debugger;
+       
         $("#physicaldoctorIds").val(physicaldoctorid);
         $("#feedback").val(type);
         $("input[name='rating'][value='" + rating + "']").prop("checked", true);
@@ -660,7 +660,7 @@
     }
 
     function SubmitFeedback() {
-        debugger;
+       
         var rating = $("input[name='rating']:checked").val();
         // Get the type value
         var type = $("#feedback").val();
@@ -695,7 +695,7 @@
         bookingStatusLabel.text(booking_status);
 
         // Add or remove CSS classes based on the condition
-        debugger;
+       
         if (booking_status === "Completed" || booking_status === "Appointment Completed") {
             bookingStatusLabel.addClass(".completed-status");
         }
@@ -731,7 +731,7 @@
         //    var description = doctorname +  '   ' + medicalInstititute;
         //   console.log("description",description);
 
-        debugger;
+       
         //  var testArray = description.split(',');
         var description = doctorname + ' --- ' + consulting_category_medical_concern + '  --- ' + medicalInstititute;
         console.log("description", description);

@@ -1,4 +1,5 @@
 ﻿
+
 <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -136,7 +137,7 @@
 
 @using X.PagedList.Mvc
 @using X.PagedList;
-@model IPagedList<MetLifeInsurance.Models.TeleDoctorReturnType>
+@model IPagedList<MetLifeInsurance.Models.InternationalDoctorReturnType>
 
 @{
     string fromdate = ViewBag.formDate;
@@ -153,7 +154,7 @@
 <div class="col-md-12 col-sm-12 " style="margin-top:50px;">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Tele Doctor  Booking<small></small></h2>
+            <h2>International Doctor  Booking<small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -194,15 +195,15 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                        <tr>
-                                            <td>@item.serial_number</td>
-                                            <td>@item.booking_code</td>
-                                            <td>@item.patient_info_name</td>
-                                            <td>@item.patient_info_email</td>
-                                            <td>@item.patient_info_contact</td>
+                                    <tr>
+                                        <td>@item.serial_number</td>
+                                        <td>@item.booking_code</td>
+                                        <td>@item.patient_info_name</td>
+                                        <td>@item.patient_info_email</td>
+                                        <td>@item.patient_info_contact</td>
                                         <td>@item.created_date<br /><span class="badge" style="background-color:rgba(87, 217, 237, 0.1); color:#57D9ED;">@(item.time_difference_in_hours_current_date.ToString())</span></td>
-                                           <td>@item.last_modified_date<br /><span class="badge" style="background-color:rgba(87, 217, 237, 0.1); color:#57D9ED;">@(item.time_difference_in_hours.ToString())</span></td>
-                                            <td>@item.preferred_date</td>
+                                        <td>@item.last_modified_date<br /><span class="badge" style="background-color:rgba(87, 217, 237, 0.1); color:#57D9ED;">@(item.time_difference_in_hours.ToString())</span></td>
+                                        <td>@item.preferred_date</td>
 
 
                                         @switch (item.booking_status)
@@ -227,73 +228,73 @@
                                                 break;
                                         }
 
-                                            <td>
-                                                <div style="display:block;">
-                                                    <div id="details" style="display: inline-block;">
-                                                        <a class="btn" style="color:dodgerblue" data-toggle="modal" data-target="#myModals" title="Edit" onclick="popupEdit('@item.booking_code','@item.booking_status','@item.medical_institute','@item.preferred_date','@item.appointment_date_time',
+                                        <td>
+                                            <div style="display:block;">
+                                                <div id="details" style="display: inline-block;">
+                                                    <a class="btn" style="color:dodgerblue" data-toggle="modal" data-target="#myModals" title="Edit" onclick="popupEdit('@item.booking_code','@item.booking_status','@item.medical_institute','@item.preferred_date','@item.appointment_date_time',
                                               '@item.patient_info_name','@item.patient_info_contact','@item.contact_info_address_1',
                                                '@item.contact_info_address_2','@item.doctor_name','@item.consulting_category_medical_concern','@item.patient_info_email','@item.patient_info_subscriber_id',
                                                '@item.patient_info_patient_type','@item.contact_info_contact','@item.contact_info_name','@item.contact_info_is_patient')">
-                                                            <span class="fa fa-eye"></span>
-                                                        </a>
-                                                    </div>
+                                                        <span class="fa fa-eye"></span>
+                                                    </a>
+                                                </div>
                                                 <div id="details" style="display: inline-block;">
                                                     <a class="btn" style="color:forestgreen" data-toggle="modal" data-target="#myModalsFeedback" title="Feedback" onclick="popupFeedBacks('@item.booking_code','@item.type','@item.rating','@item.remarks')">
                                                         <span class="fa fa-comment"></span>
                                                     </a>
                                                 </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
                         <div class="col-sm-9" style="float:right;">
                             <div class="pagination" style="float:right;">
                                 <ul class="pagination">
-                                  
-                                        <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
-                                            <a href="/tele/doctor/list?pageNumber=1&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-left"></i></a>
+
+                                    <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
+                                        <a href="/international/doctor/list?pageNumber=1&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-left"></i></a>
+                                    </li>
+                                    <li class="paginate_button previous @(Model.HasPreviousPage ? "" : "disabled")">
+                                        <a href="/international/doctor/list?pageNumber=@(Model.PageNumber - 1)&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-left"></i></a>
+                                    </li>
+                                    @if (Model.PageNumber > 3)
+                                    {
+                                        <li>
+                                            <a href="/international/doctor/list?pageNumber=1&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">1</a>
                                         </li>
-                                        <li class="paginate_button previous @(Model.HasPreviousPage ? "" : "disabled")">
-                                            <a href="/tele/doctor/list?pageNumber=@(Model.PageNumber - 1)&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-left"></i></a>
-                                        </li>
-                                        @if (Model.PageNumber > 3)
+                                        @if (Model.PageNumber > 4)
                                         {
-                                            <li>
-                                                <a href="/tele/doctor/list?pageNumber=1&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">1</a>
-                                            </li>
-                                            @if (Model.PageNumber > 4)
-                                            {
-                                                <li class="disabled"><a>...</a></li>
-                                            }
+                                            <li class="disabled"><a>...</a></li>
                                         }
-                                        @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+                                    }
+                                    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+                                    {
+                                        if (i > 0 && i <= Model.PageCount)
                                         {
-                                            if (i > 0 && i <= Model.PageCount)
-                                            {
-                                                <li class="@(Model.PageNumber == i ? "active" : "")">
-                                                    <a href="/tele/doctor/list?pageNumber=@i&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">@i</a>
-                                                </li>
-                                            }
-                                        }
-                                        @if (Model.PageNumber < Model.PageCount - 2)
-                                        {
-                                            @if (Model.PageNumber < Model.PageCount - 3)
-                                            {
-                                                <li class="disabled"><a>...</a></li>
-                                            }
-                                            <li>
-                                                <a href="/tele/doctor/list?pageNumber=@Model.PageCount&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">@Model.PageCount</a>
+                                            <li class="@(Model.PageNumber == i ? "active" : "")">
+                                                <a href="/international/doctor/list?pageNumber=@i&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">@i</a>
                                             </li>
                                         }
-                                        <li class="paginate_button next @(Model.HasNextPage ? "" : "disabled")">
-                                            <a href="/tele/doctor/list?pageNumber=@(Model.PageNumber + 1)&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-right"></i></a>
+                                    }
+                                    @if (Model.PageNumber < Model.PageCount - 2)
+                                    {
+                                        @if (Model.PageNumber < Model.PageCount - 3)
+                                        {
+                                            <li class="disabled"><a>...</a></li>
+                                        }
+                                        <li>
+                                            <a href="/international/doctor/list?pageNumber=@Model.PageCount&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate">@Model.PageCount</a>
                                         </li>
-                                        <li class="paginate_button next @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
-                                            <a href="/tele/doctor/list?pageNumber=@Model.PageCount&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-right"></i></a>
-                                        </li>
-                                 
+                                    }
+                                    <li class="paginate_button next @(Model.HasNextPage ? "" : "disabled")">
+                                        <a href="/international/doctor/list?pageNumber=@(Model.PageNumber + 1)&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                    <li class="paginate_button next @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+                                        <a href="/international/doctor/list?pageNumber=@Model.PageCount&code=@code&name=@name&contact=@contact&bookingid=@booking_status&pendingid=@pending_status&fromdate=@fromdate&todate=@toDate"><i class="fa fa-angle-double-right"></i></a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -311,7 +312,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen" role="document">
                     <div class="modal-content" style="width: 1000px; height: 700px;background-color:#ededed;">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel" style="color:black;">Tele Doctor Detail</h4>
+                            <h4 class="modal-title" id="myModalLabel" style="color:black;">International Doctor Detail</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         </div>
                         <div class="modal-body">
@@ -533,7 +534,7 @@
                         <div class="modal-body">
                             <div class="modal-body">
                                 <div style="display: block;">
-                                    <input type="hidden" id="teledoctorIds" value="">
+                                    <input type="hidden" id="internationaldoctorIds" value="">
                                     <div class="row">
                                         <label style="color:black;">Rating :</label>
                                         <div class="rating" style="margin-left:38px;margin-top:-9px;">
@@ -621,7 +622,7 @@
             updatePageSizeInLinks(selectedPageSize);
 
             // Redirect to the new URL with updated page size and current page
-            window.location.href = `/physical/doctor/list?page=${currentPage}&pageSize=${selectedPageSize}`;
+            window.location.href = `/international/doctor/list?page=${currentPage}&pageSize=${selectedPageSize}`;
         });
 
         // Function to retrieve the current page number
@@ -650,11 +651,8 @@
     });
 
     function popupFeedBacks(physicaldoctorid, type, rating, remarks) {
-        debugger;
-     
 
-      
-        $("#teledoctorIds").val(physicaldoctorid);
+        $("#internationaldoctorIds").val(physicaldoctorid);
         $("#feedback").val(type.trim());
         $("input[name='rating'][value='" + rating + "']").prop("checked", true);
         $("textarea[name='message']").val(remarks);
@@ -668,14 +666,14 @@
         // Get the remarks value
         var remarks = $("textarea[name='message']").val();
 
-        var Id = $("#teledoctorIds").val();
-        console.log("teledoctorIds", Id);
+        var Id = $("#internationaldoctorIds").val();
+        console.log("internationaldoctorIds", Id);
         let conf = confirm(`Are you sure you want to send feedback ?`);
         if (!conf) {
-            window.location.href = "/tele/doctor/list";
+            window.location.href = "/international/doctor/list";
             return;
         } else {
-            window.location.href = `/Teledoctorfeedback?id=${Id}&rating=${rating}&type=${type}&remarks=${remarks}`;
+            window.location.href = `/Internationaldoctorfeedback?id=${Id}&rating=${rating}&type=${type}&remarks=${remarks}`;
         }
     }
 
@@ -696,7 +694,7 @@
         bookingStatusLabel.text(booking_status);
 
         // Add or remove CSS classes based on the condition
-       
+
         if (booking_status === "Completed" || booking_status === "Appointment Completed") {
             bookingStatusLabel.addClass(".completed-status");
         }
@@ -732,7 +730,7 @@
         //    var description = doctorname +  '   ' + medicalInstititute;
         //   console.log("description",description);
 
-       
+
         //  var testArray = description.split(',');
         var description = doctorname + ' --- ' + consulting_category_medical_concern + '  --- ' + medicalInstititute;
         console.log("description", description);

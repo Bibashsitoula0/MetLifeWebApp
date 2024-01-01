@@ -151,7 +151,7 @@
 
                             <div>
                                 <img src="/Content/build/images/MetLife.png" style="height:30px;width:100px;object-fit: contain;" />
-
+                            
                                 <p>Copyright © 2021 American Life Insurance Company</p>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
     function validateForm(event) {
         // Prevent the form from submitting
         event.preventDefault();
-        debugger;
+       
 
         // Clear previous error messages
         document.getElementById('username-error').textContent = '';
@@ -201,7 +201,7 @@
   
 
     if ('@ViewBag.UserMessage' !== '') {
-        debugger;
+       
         showToast("User does not exist. Please contact administrative");
         function showToast(message) {
             var toast = document.getElementById('toast');
