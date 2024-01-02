@@ -865,6 +865,57 @@ namespace MetLifeInsurance.Controllers
 
         }
 
+        [Route("order/export")]
+        [HttpGet]
+        public async Task<Object> Order(string fromdate, string? todate, string? order, string status)
+        {
+            var obj = new DashboardFilterOrder();
+
+            obj.formDate = fromdate;
+            obj.toDate = todate;
+            obj.status=status;
+            obj.order = order;
+
+            obj.page = 1;
+            obj.pageSize = 10000000;
+
+            var res = await _testingRepository.getorderList(obj);
+
+            DataTable datatable = new DataTable();
+
+            // Assuming res.Count > 0 to determine the model type
+            if (res.Count > 0)
+            {
+                var modelType = res[0].GetType();
+                var properties = modelType.GetProperties();
+
+                foreach (var property in properties)
+                {
+                    datatable.Columns.Add(property.Name);
+                }
+
+                foreach (var item in res)
+                {
+                    var row = datatable.NewRow();
+                    foreach (var property in properties)
+                    {
+                        row[property.Name] = property.GetValue(item) ?? DBNull.Value;
+                    }
+                    datatable.Rows.Add(row);
+                }
+            }
+
+            var heading = "";
+            var heading1 = "'";
+            var heading2 = "";
+            var heading3 = "";
+            byte[] filecontent = ExcelExportHelper.ExportExcel(datatable, heading, heading1, heading2, heading3, true);
+            return File(filecontent, ExcelExportHelper.ExcelContentType, "Order.xlsx");
+
+        }
+
+
+
 
 
 

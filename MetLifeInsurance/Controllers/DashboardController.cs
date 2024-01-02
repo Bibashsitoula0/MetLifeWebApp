@@ -2,6 +2,7 @@
 using MetLifeInsurance.Models;
 using MetLifeInsurance.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ namespace MetLifeInsurance.Controllers
         }
 
         [HttpPost]
-        [Route("dashboard/home/testing/service")]
+        [Microsoft.AspNetCore.Mvc.Route("dashboard/home/testing/service")]
         public async Task<Object> GetDashboardPieChartData(DashboardFilter dashboardFilter)
         {
 
@@ -52,7 +53,7 @@ namespace MetLifeInsurance.Controllers
         }
 
         [HttpGet]
-        [Route("doctor/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("doctor/dashboard")]
         public async Task<IActionResult> DoctorDashboard()
         {
 
@@ -63,7 +64,7 @@ namespace MetLifeInsurance.Controllers
 
 
         [HttpPost]
-        [Route("doctor/wise/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("doctor/wise/dashboard")]
         public async Task<Object> GetDashboardDoctorPieChartData(DashboardFilter dashboardFilter)
         {
 
@@ -76,7 +77,7 @@ namespace MetLifeInsurance.Controllers
         }
 
         [HttpGet]
-        [Route("tele/doctor/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("tele/doctor/dashboard")]
         public async Task<IActionResult> TeleDashboard()
         {
 
@@ -84,7 +85,7 @@ namespace MetLifeInsurance.Controllers
         }
 
         [HttpPost]
-        [Route("teledoctor/wise/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("teledoctor/wise/dashboard")]
         public async Task<Object> GetDashboardTeleDoctorPieChartData(DashboardFilter dashboardFilter)
         {
 
@@ -100,7 +101,7 @@ namespace MetLifeInsurance.Controllers
 
 
         [HttpGet]
-        [Route("virtual/doctor/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("virtual/doctor/dashboard")]
         public async Task<IActionResult> VirtualDashboard()
         {
 
@@ -110,7 +111,7 @@ namespace MetLifeInsurance.Controllers
 
 
         [HttpPost]
-        [Route("virtualdoctor/wise/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("virtualdoctor/wise/dashboard")]
         public async Task<Object> GetDashboardVirtualDoctorPieChartData(DashboardFilter dashboardFilter)
         {
 
@@ -130,7 +131,7 @@ namespace MetLifeInsurance.Controllers
 
 
         [HttpGet]
-        [Route("international/doctor/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("international/doctor/dashboard")]
         public async Task<IActionResult> InternationalDoctorDashboard()
         {
 
@@ -138,7 +139,7 @@ namespace MetLifeInsurance.Controllers
         }
 
         [HttpPost]
-        [Route("internationaldoctor/wise/dashboard")]
+        [Microsoft.AspNetCore.Mvc.Route("internationaldoctor/wise/dashboard")]
         public async Task<Object> GetDashboardInternationalDoctorPieChartData(DashboardFilter dashboardFilter)
         {
 
@@ -199,9 +200,15 @@ namespace MetLifeInsurance.Controllers
         /// <param name="role">Role for loggged in user in Session</param>
         /// <param name="feature">Functionality where we want to assign user access</param>
         /// <returns></returns>
-        public static  bool Validate(string username, string role, string feature)
+        public static object Validate(string username, string role, string feature)
         {
             HttpContext httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext.Session.GetString("UserName") == null)
+            {
+               return new { Redirect = true, Controller = "Account", Action = "Login" };
+               
+            }
 
             // Access session data
             string sessionUsername = httpContext.Session.GetString("UserName").Trim();

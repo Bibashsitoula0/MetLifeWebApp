@@ -1,3 +1,4 @@
+using MetLifeInsurance;
 using MetLifeInsurance.Controllers;
 using MetLifeInsurance.DapperConfigure;
 using MetLifeInsurance.Data;
@@ -7,6 +8,7 @@ using MetLifeInsurance.Repository.AccountRepository;
 using MetLifeInsurance.Repository.RegisterRepository.AccountRepository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web.UI;
 
@@ -31,13 +33,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddTransient<IHttpContextAccessor,HttpContextAccessor>();
 
 builder.Services.AddDistributedMemoryCache();
+
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(Convert.ToInt32(builder.Configuration["SessionTimeOutMinutes"]));
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 
+      // options.SessionStore = new MemoryCacheSessionStore();
+
+
 });
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
@@ -59,7 +68,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-/*app.UseMiddleware<CustomAuthorization>();*/
 app.UseRouting();
 
 app.UseSession();

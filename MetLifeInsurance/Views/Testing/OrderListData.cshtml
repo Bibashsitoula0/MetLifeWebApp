@@ -152,7 +152,7 @@
 <div class="col-md-12 col-sm-12 " style="margin-top:50px;">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Orders List <small></small></h2>
+            <h2>Medicine Orders List <small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -202,24 +202,21 @@
                                             @switch (item.status.ToLower())
                                             {
                                                 case "completed":
-                                                <td class="text-center"><span class="badge" style="background-color:lightskyblue; color:white;font-size:30px;">@item.status</span></td>
+                                                <td class="text-center"><span class="badge" style="background-color:lightskyblue; color:white;font-size:12px;">@item.status</span></td>
                                                     break;
                                                 case "processing":
-                                                <td class="text-center"><span class="badge" style="background-color:#28a745; color:white ; font-size:15px;">@item.status</span><br /></td>
+                                                <td class="text-center"><span class="badge" style="background-color:#28a745; color:white ; font-size:12px;">@item.status</span><br /></td>
                                                     break;
                                                 case "refund":
-                                                <td class="text-center"><span class="badge" style="background-color:darkgray; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                <td class="text-center"><span class="badge" style="background-color:darkgray; color:white; font-size:12px;">@item.status</span><br /></td>
                                                     break;
                                                 case "failed":
-                                                <td class="text-center"><span class="badge" style="background-color:red; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                <td class="text-center"><span class="badge" style="background-color:red; color:white; font-size:12px;">@item.status</span><br /></td>
                                                     break;
                                                  default:
-                                                <td class="text-center"><span class="badge" style="background-color:aqua; color:white; font-size:15px;">@item.status</span><br /></td>
+                                                <td class="text-center"><span class="badge" style="background-color:royalblue; color:white; font-size:12px;">@item.status</span><br /></td>
                                                     break;
                                             }
-               
-                               
-
 
                                         <td>@item.total</td>                                      
                                       @*   <td>@item.totalcount</td> *@
@@ -230,7 +227,7 @@
                                                        onclick="popupOrder('@item.transaction_id','@item.biling_city','@item.date_created','@item.biling_first_name','@item.biling_last_name','@item.biling_adress','@item.biling_email','@item.biling_phone',
                                                        '@item.biling_state','@item.payment_method','@item.payment_method_title',
                                                       '@item.shipping_first_name','@item.shipping_last_name','@item.shipping_city','@item.shipping_state','@item.date_created',
-                                                       '@item.status','@item.order_id','@item.shipping_address1')">
+                                                       '@item.status','@item.order_id','@item.shipping_address1','@item.metavalue')">
                                                         <span class="fa fa-eye"></span>
                                                     </a>
                                                 </div>                                              
@@ -366,10 +363,7 @@
                                                                 <p id="bilingpaymentNetwork" style="margin-top:-15px;"></p>
                                                              
 
-                                                                <div class="card-item">                                                            
-                                                                    <p>Payment Id:</p>
-                                                                    <p id="bilingpaymentid" style="margin-top:-15px;"></p>
-                                                                </div>
+                                                              
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4 invoice-col">
@@ -504,7 +498,7 @@
 
     function popupOrder(transcationid,bilingcity,datecreated,biling_first_name, biling_last_name, biling_adress, biling_email, biling_phone, biling_state,
         payment_method, payment_method_title, shipping_first_name, shipping_last_name, shipping_city,
-        shipping_state, date_created, status, order_id, shipping_address) {
+        shipping_state, date_created, status, order_id, shipping_address,metadata) {
 
         debugger;
 
@@ -513,7 +507,7 @@
         $("#bilingphone").text(biling_phone);
         $("#Institute").text(biling_state);
         $("#bilingpaymentid").text(transcationid);
-        $("#bilingpaymentNetwork").text(payment_method_title);
+  
         $("#Institute").text(shipping_first_name);
         $("#Institute").text(shipping_last_name);
         $("#shipingallplace").text(shipping_address);
@@ -532,6 +526,9 @@
         var shippingaddress = shipping_first_name + shipping_last_name;
 
         $("#shipingallplace").text(shippingaddress);
+
+        var paymentttile = payment_method_title + " " + "(" + metadata + ")";
+        $("#bilingpaymentNetwork").text(paymentttile);
 
     }
 

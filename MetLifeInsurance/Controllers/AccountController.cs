@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using MetLifeInsurance.Repository.RegisterRepository.AccountRepository;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MetLifeInsurance.Controllers
 {
@@ -27,6 +27,11 @@ namespace MetLifeInsurance.Controllers
             _registerRepository = registerRepository;
             _httpContextAccessor = httpContextAccessor;
             _configuration= configuration;
+        }
+
+        public async Task<object> ThrowLogin(string login)
+        {
+            return Redirect(login);
         }
 
         private async Task<bool> ADlogin(string username, string currentpassword)
@@ -54,6 +59,8 @@ namespace MetLifeInsurance.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Login")]
         public async Task<IActionResult> Login()
         {
             return View();

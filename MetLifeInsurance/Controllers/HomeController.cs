@@ -30,7 +30,7 @@ namespace MetLifeInsurance.Controllers
 
            
             
-            return Redirect("/Account/Login");    
+            return Redirect("/Login");    
             
 
         }

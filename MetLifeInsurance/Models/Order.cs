@@ -4,9 +4,7 @@
         public class Order
         {
            
-        public long serial_number { get; set; }
-            public int id { get; set; }
-            public long totalcount { get; set; }
+      
             public string status { get; set; }
             public string currency { get; set; }
             public string version { get; set; }
@@ -43,5 +41,10 @@
             public string biling_email { get; set; }
             public string biling_phone { get; set; }
            public string transaction_id { get; set; }
+           public string metavalue { get; set; }
+
+        public long serial_number { get; set; }
+        public int id { get; set; }
+        public long totalcount { get; set; }
     }
 }
