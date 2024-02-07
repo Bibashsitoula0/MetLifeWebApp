@@ -70,10 +70,9 @@ namespace MetLifeInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-            // bool isadlogin = await ADlogin(login.UserName, login.Password);         
-
             bool isadlogin = true;
-                if (isadlogin == true)
+             //bool isadlogin = await ADlogin(login.UserName, login.Password);
+            if (isadlogin == true)
                 {
                     var getuser = await _registerRepository.getUser(login.UserName);
                     var user = getuser.FirstOrDefault();
@@ -113,13 +112,11 @@ namespace MetLifeInsurance.Controllers
             return Redirect("/Dashboard");
         }
 
-
         [HttpPost]
         public bool CheckAd([FromForm]TestAd testAd)
         {           
             return true;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> LogOut()

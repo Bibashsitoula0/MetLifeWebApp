@@ -98,8 +98,6 @@ namespace MetLifeInsurance.Controllers
             return RedirectToAction("PhysicalDoctor", "Testing");
         }
 
-
-
         [Route("Teledoctorfeedback")]
         public async Task<Object> Teledoctorfeedback(string? id, int? rating, string type, string remarks)
         {
@@ -122,8 +120,6 @@ namespace MetLifeInsurance.Controllers
             var res = await _testingRepository.Internationaldoctorfeedback(id, rating, type, remarks);
             return RedirectToAction("InternationalDoctor", "Testing");
         }
-
-
 
         [Route("home/testing/export")]
         [HttpGet]
@@ -202,9 +198,6 @@ namespace MetLifeInsurance.Controllers
             return File(filecontent, ExcelExportHelper.ExcelContentType, "Booking.xlsx");
 
         }
-
-
-
 
         [Route("physical/doctor/list")]
         public async Task<Object> PhysicalDoctor(int? pageNumber, string code, string name, string contact, string bookingid, string pendingid, string fromdate, string todate)
@@ -506,9 +499,6 @@ namespace MetLifeInsurance.Controllers
 
         }
 
-
-
-
         [Route("virtual/doctor/list")]
         public async Task<Object> VirtualDoctor(int? pageNumber, string code, string name, string contact, string bookingid, string pendingid, string fromdate, string todate)
         {
@@ -656,11 +646,6 @@ namespace MetLifeInsurance.Controllers
             return File(filecontent, ExcelExportHelper.ExcelContentType, "VirtualDoctor.xlsx");
 
         }
-
-
-
-
-
 
         [Route("international/doctor/list")]
         public async Task<Object> InternationalDoctor(int? pageNumber, string code, string name, string contact, string bookingid, string pendingid, string fromdate, string todate)
@@ -811,9 +796,6 @@ namespace MetLifeInsurance.Controllers
         }
 
 
-
-
-
         [Route("order/list")]
         public async Task<Object> OrderList(int? pageNumber, string order,string status, string fromdate, string todate)
         {
@@ -913,13 +895,6 @@ namespace MetLifeInsurance.Controllers
             return File(filecontent, ExcelExportHelper.ExcelContentType, "Order.xlsx");
 
         }
-
-
-
-
-
-
-
 
         [AllowAnonymous]
         [Route("getbookingstatus")]

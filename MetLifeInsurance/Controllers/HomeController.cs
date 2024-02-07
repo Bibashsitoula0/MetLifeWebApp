@@ -14,22 +14,22 @@ namespace MetLifeInsurance.Controllers
     
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;   
+        private readonly ILogger<HomeController> _logger;
+        private readonly BackgoundService.BackgroundServiceJob _backgroundService;
       
         public readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, BackgoundService.BackgroundServiceJob backgroundService)
         {
             _logger = logger;      
-          
+             _backgroundService = backgroundService;
             _httpContextAccessor = httpContextAccessor;
         }
        
-        public  IActionResult Index()
+        public async Task<IActionResult>  Index()
         {
             /*  return RedirectToAction("Index", "Dashboard");*/
-
            
-            
+           
             return Redirect("/Login");    
             
 
