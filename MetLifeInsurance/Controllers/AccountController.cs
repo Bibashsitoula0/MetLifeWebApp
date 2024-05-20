@@ -70,8 +70,8 @@ namespace MetLifeInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-            bool isadlogin = true;
-             //bool isadlogin = await ADlogin(login.UserName, login.Password);
+           // bool isadlogin = true;
+             bool isadlogin = await ADlogin(login.UserName, login.Password);
             if (isadlogin == true)
                 {
                     var getuser = await _registerRepository.getUser(login.UserName);

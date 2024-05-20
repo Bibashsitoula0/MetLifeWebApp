@@ -14,9 +14,9 @@ namespace MetLifeInsurance.BackgoundService
 
         public BackgroundServiceJob(IConfiguration configuration, ILogger<BackgroundServiceJob> logger)
         {
-            _configuration = configuration ?? throw new ArgumentNullException("Connection string Configuration did not found");
+            _configuration = configuration;
 
-            _logger = logger ?? throw new ArgumentNullException("Logger doesnot work..");
+            _logger = logger;
         }
 
         private DateTime _lastSyncDate = DateTime.Now;
