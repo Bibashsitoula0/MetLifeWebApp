@@ -64,7 +64,7 @@ namespace MetLifeInsurance.BackgoundService
 
         public void ScheduleApiCall()
         {
-            RecurringJob.AddOrUpdate("api-data-job", () => SetBackgroundData(), Cron.MinuteInterval(5));           
+            RecurringJob.AddOrUpdate("api-data-job", () => SetBackgroundData(), Cron.MinuteInterval(2));           
         }
 
         public async Task SetBackgroundData()
@@ -849,11 +849,6 @@ namespace MetLifeInsurance.BackgoundService
                     int resultmeta = deletemetadata.ExecuteNonQuery();
 
                     var metass = order.meta_data;
-
-
-
-
-
                     foreach (var item in metass)
                     {
                         if (item.key == "paying_network")

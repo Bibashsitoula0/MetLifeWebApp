@@ -3,9 +3,23 @@
 @inject IHttpContextAccessor _httpContextAccessor
 
 @{
-    string roles;
-    var usernames = _httpContextAccessor.HttpContext.Session.GetString("UserName").Trim();
-    var Role = _httpContextAccessor.HttpContext.Session.GetString("Role").Trim();
+    string roles = string.Empty;
+    string usernames = _httpContextAccessor.HttpContext.Session.GetString("UserName");
+    string role = _httpContextAccessor.HttpContext.Session.GetString("Role");
+    string Role = null;
+    string Usernames = null;
+
+
+    if (string.IsNullOrEmpty(usernames) || string.IsNullOrEmpty(role))
+    {
+        // If session expired, redirect to login page
+       // Response.Redirect("/Account/Login");
+    }
+    else
+    {
+       Usernames = usernames.Trim();
+        Role = role.Trim();
+    }
 }
 
 <!DOCTYPE html>
@@ -133,9 +147,9 @@
 
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
 
-                                @if (usernames != null)
+                                @if (Usernames != null)
                                 {
-                                    var username = usernames;
+                                    var username = Usernames;
 
                                     <a class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                                        data-toggle="dropdown" aria-expanded="false">

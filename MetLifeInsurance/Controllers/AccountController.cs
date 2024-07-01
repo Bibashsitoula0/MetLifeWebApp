@@ -18,9 +18,7 @@ namespace MetLifeInsurance.Controllers
         public readonly IHttpContextAccessor _httpContextAccessor;
         public readonly IRegisterRepository _registerRepository;      
         public readonly IConfiguration _configuration;
-
-
-
+            
         public AccountController(HttpClient httpClient, IRegisterRepository registerRepository, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _httpClient = httpClient;
@@ -70,7 +68,7 @@ namespace MetLifeInsurance.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-           // bool isadlogin = true;
+              //bool isadlogin = true;
              bool isadlogin = await ADlogin(login.UserName, login.Password);
             if (isadlogin == true)
                 {
@@ -124,7 +122,7 @@ namespace MetLifeInsurance.Controllers
             HttpContext.Session.Remove("UserName");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("Role");
-            return Redirect("/Account/Login") ;
+            return Redirect("/Login") ;
         }
 
     }

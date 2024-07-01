@@ -1,4 +1,5 @@
 using Hangfire;
+using Hangfire.Dashboard;
 using MetLifeInsurance;
 using MetLifeInsurance.BackgoundService;
 using MetLifeInsurance.Controllers;
@@ -82,9 +83,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseRouting();
 
-
-app.UseHangfireDashboard();
 app.UseHangfireServer();
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new IDashboardAuthorizationFilter[]
+   {
+       // new HangfireAuthorizationFilter()
+   }
+});
 
 
 app.UseSession();

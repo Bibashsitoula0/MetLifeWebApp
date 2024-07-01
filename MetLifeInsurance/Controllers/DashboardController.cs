@@ -165,12 +165,10 @@ namespace MetLifeInsurance.Controllers
     {
         public string Role { get; }
 
-
         public CustomAuthorizationAttribute(string role)
         {
             Role = role;
         }
-
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             /*string role = HttpContext.Session.GetString("Role");
@@ -204,9 +202,14 @@ namespace MetLifeInsurance.Controllers
         {
             HttpContext httpContext = _httpContextAccessor.HttpContext;
 
+            if(httpContext == null)
+            {
+                return new { Redirect = true, Controller = "Account", Action = "LogOut" };
+            }
+
             if (httpContext.Session.GetString("UserName") == null)
             {
-               return new { Redirect = true, Controller = "Account", Action = "Login" };
+               return new { Redirect = true, Controller = "Account", Action = "LogOut" };
                
             }
 
